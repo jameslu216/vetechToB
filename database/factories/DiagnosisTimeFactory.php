@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\ServeTime;
+use App\Models\DiagnosisTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ServeTimeFactory extends Factory
+class DiagnosisTimeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = ServeTime::class;
+    protected $model = DiagnosisTime::class;
 
     /**
      * Define the model's default state.

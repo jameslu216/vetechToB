@@ -15,8 +15,11 @@ class CreateDiagnosisTimeTable extends Migration
     {
         Schema::create('diagnosis_time', function (Blueprint $table) {
             $table->integer('doctor_id')->unsigned();
-            $table->foreign('doctor_id')->references('id')->on('doctor');
-            // TODO add week_day and time
+            $table->tinyInteger('day')->unsigned(); //星期幾
+            $table->tinyInteger('time_zone')->unsigned(); //哪一個時段 上午 中午 下午 代表 0 1 2
+            $table->time('start_at');
+            $table->time('end_at');
+            $table->primary(['doctor_id', 'day', 'time_zone']);
         });
     }
 
