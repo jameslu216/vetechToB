@@ -1,5 +1,6 @@
 import Vue from 'vue';
-
+import { FormDatepickerPlugin } from 'bootstrap-vue'
+Vue.use(FormDatepickerPlugin)
 window.Vue = Vue;
 
 require('./bootstrap');
