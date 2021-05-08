@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-0 " style="width:25%">
+            <div class="p-0 " style="width:24%">
                 <div class="text-left gray-title upper-radius">
                     <span class="title-discription">正在看診</span>
                     <div class="row item-title text-center">
@@ -67,6 +67,7 @@
                 <div class="waiting-page lower-radius"></div>
             </div>
         </div>
+        <router-view></router-view>
     </div>
 </template>
 <script>
