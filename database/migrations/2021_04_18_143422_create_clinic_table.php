@@ -19,6 +19,7 @@ class CreateClinicTable extends Migration
             $table->string('address');
             $table->string('introduction');
             $table->string('service_type');
+            $table->string('phone');
             $table->binary('picture');
 
         });
