@@ -25,7 +25,7 @@ export default new VueRouter({
                 path: '/',
                 component: Index,
                 children: [{
-                    path: 'about',
+                    path: '/about',
                     component: About,
                 },
                 ]
