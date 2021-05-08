@@ -10,13 +10,14 @@
     "watch-poll": "mix watch -- --watch-options-poll=1000"
   },
   "dependencies": {
+    "bootstrap-vue": "^2.21.2",
     "vue-router": "^3.5.1",
     "vuetify": "^2.4.7",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
     "axios": "^0.21",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.6.0",
     "jquery": "^3.2",
     "laravel-mix": "^6.0.6",
     "lodash": "^4.17.19",
@@ -25,7 +26,7 @@
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.32.0",
     "sass-loader": "^10.0.0",
-    "vue": "^2.5.17",
+    "vue": "^2.6.12",
     "vue-cli-plugin-vuetify": "~2.3.1",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.10",
