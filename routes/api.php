@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//取得診所資料
+Route::get('/clinic', 'App\Http\Controllers\ClinicController@getClinicInformation');
