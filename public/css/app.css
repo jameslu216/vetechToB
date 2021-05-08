@@ -501,7 +501,7 @@ mark,
 }
 
 .blockquote-footer::before {
-  content: "— ";
+  content: "— ";
 }
 
 .img-fluid {
@@ -10943,5 +10943,4 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
-
 
