@@ -13,7 +13,7 @@ class ClinicRepository
      */
     public function getClinicData($clinic_id)
     {
-        $clinic = Clinic::find($clinic_id);
+        $clinic = Clinic::with('serveTimes')->find($clinic_id);
         return $clinic;
     }
 }
