@@ -3,7 +3,6 @@
         id="app"
         class="row"
         style="
-      background-color: #c4e1e1;
       z-index: -1;
       padding-bottom: 50px;
       border-radius: 10px;
