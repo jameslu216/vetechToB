@@ -6,28 +6,179 @@
                 <span class="vet_name">{{ name }}</span>
                 <img class="vet_icon" src="/AllianceIcon.svg" />
             </div>
-            <br />
-            <div class="col-12">
-            <span style="font-size:18px;font-weight:bold;">看診日期</span>
-            <b-input-group class="m-3" style="width:300px">
-                <b-form-input
-                    id="example-input"
-                    v-model="value"
-                    type="text"
-                    placeholder="YYYY-MM-DD"
-                    autocomplete="off"
-                ></b-form-input>
-                <b-input-group-append>
-                    <b-form-datepicker
-                        v-model="value"
-                        button-only
-                        right
-                        locale="en-US"
-                        aria-controls="example-input"
-                        @context="onContext"
-                    ></b-form-datepicker>
-                </b-input-group-append>
-            </b-input-group>
+            <div class="row m-3">
+                <div class="col-4 p-0">
+                    <span style="font-weight:bold;font-size:24px"
+                        >顧客資訊</span
+                    >
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="customer-name">姓名</label>
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="test"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="必填"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="customer-phone-number">電話</label>
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="customer_phone_number"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="必填"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row m-3">
+                <div class="col-4 p-0">
+                    <span style="font-weight:bold;font-size:24px"
+                        >寵物資訊</span
+                    >
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0"><label for="pet-name">姓名</label></div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_name"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="必填"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="pet-gender">性別</label>
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_gender"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="必填"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="row ml-2">
+                <div class="col-3 p-0"><label for="pet-type">品種</label></div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_type"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="必填"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0"><label for="pet-age"></label>年齡</div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_age"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="必填"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="pet-weight"></label>體重
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_weight"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="選填"
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="pet-feeding-habit"></label>餵食習慣
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_feeding_habbit"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="選填"
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="pet-chip-num"></label>晶片號碼
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_chip_num"
+                        class="w-100"
+                        style="height:32px"
+                        placeholder="選填"
+                    ></textarea>
+                </div>
+            </div>
+            <div class="row ml-2">
+                <div class="col-3 p-0">
+                    <label for="pet-reminder"></label>備註
+                </div>
+                <div class="col-8 p-0 ">
+                    <textarea
+                        v-model="pet_reminder"
+                        class="w-100"
+                        style="height:64px"
+                        placeholder="選填"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="row m-3">
+                <div class="col-4">
+                    <span style="font-size:24px;font-weight:bold;"
+                        >看診日期</span
+                    >
+                </div>
+                <div class="col-12">
+                    <b-input-group class="m-3" style="width:300px">
+                        <b-form-input
+                            id="example-input"
+                            v-model="booking_date"
+                            type="text"
+                            placeholder="YYYY-MM-DD"
+                            autocomplete="off"
+                        ></b-form-input>
+                        <b-input-group-append>
+                            <b-form-datepicker
+                                v-model="booking_date"
+                                button-only
+                                right
+                                locale="en-US"
+                                aria-controls="example-input"
+                                @context="onContext"
+                            ></b-form-datepicker>
+                        </b-input-group-append>
+                    </b-input-group>
+                </div>
             </div>
             <div>
                 <span></span>
@@ -44,12 +195,24 @@
 export default {
     data() {
         return {
-            name: "聯 盟 動 物 醫 院",
-            branch_name: "仁武總院",
-            work_time: {},
-            address: "高雄市仁武區鳳仁路231號E棟",
-            phone_number: "(07)2730964 #20",
-            value: ""
+            vet_name: "聯 盟 動 物 醫 院",
+            vet_branch_name: "仁武總院",
+            vet_work_time: {},
+            vet_address: "高雄市仁武區鳳仁路231號E棟",
+            vet_phone_number: "(07)2730964 #20",
+            value: "",
+            booking_date: "",
+            customer_name: "",
+            customer_phone_number: "",
+            pet_name: "",
+            pet_gender: "",
+            pet_type: "",
+            pet_age: "",
+            pet_weight: "",
+            pet_feeding_habbit: "",
+            pet_chip_num: "",
+            pet_reminder: "",
+            test: ""
         };
     },
     methods: {
