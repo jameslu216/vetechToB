@@ -18,8 +18,6 @@ class CreatePetTable extends Migration
             $table->string('name');
             $table->string('gender');
             $table->integer('customer_id')->unsigned();
-            $table->foreign('customer_id')->references('id')->on('customer');
-
         });
     }
 

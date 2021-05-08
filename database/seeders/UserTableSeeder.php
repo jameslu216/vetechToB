@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\Pet;
+use App\Models\diagnosisTime;
 
 class UserTableSeeder extends Seeder
 {
@@ -15,15 +18,10 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-
-        DB::table('user')->insert([
-            'name' => Str::random(10),
-            'email' => Str::random(10).'@gmail.com',
-            'account' => Str::random(10),
-            'password' => Str::random(10),
-            'phone' => Str::random(10),
-
-        ]);
-        //
+        $count = 0;
+        User::factory()->count(5)->create()->each(function ($user) {
+            $user->doctors()->create()->diagnosisTimes()->save(DiagnosisTime::factory()->count(1)->make()[0]);
+            $user->customers()->create()->pets()->save(Pet::factory()->count(1)->make()[0]);
+        });
     }
 }

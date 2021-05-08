@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Pet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class PetFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Pet::class;
 
     /**
      * Define the model's default state.
@@ -23,11 +23,8 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'account' => Str::random(3),
-            'password' => '00000000', // password
             'name' => $this->faker->name,
-            'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
+            'gender' => 'male',
         ];
     }
 }
