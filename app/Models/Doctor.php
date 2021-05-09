@@ -22,4 +22,9 @@ class Doctor extends User
     {
         return $this->hasMany('App\Models\DiagnosisTime', 'doctor_id', 'id');
     }
+
+    public function clinic()
+    {
+        return $this->belongsTo('App\Models\Clinic', 'clinic_id', 'id');
+    }
 }

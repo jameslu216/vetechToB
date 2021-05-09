@@ -16,4 +16,9 @@ class Clinic extends Model
     {
         return $this->hasMany('App\Models\ServeTime', 'clinic_id', 'id');
     }
+
+    public function doctors()
+    {
+        return $this->hasMany('App\Models\Doctor', 'clinic_id', 'id');
+    }
 }

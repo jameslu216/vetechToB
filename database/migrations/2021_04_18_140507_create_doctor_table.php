@@ -16,6 +16,7 @@ class CreateDoctorTable extends Migration
         Schema::create('doctor', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('clinic_id')->unsigned()->nullable();
         });
     }
 
