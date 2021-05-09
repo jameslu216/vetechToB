@@ -1,5 +1,8 @@
 <template>
-    <div class="col-12 m-0">
+    <div
+        class="col-12 m-0"
+        style="background-color: #c4e1e1;"
+    >
         <div class="row mt-4">
             <div class="" style="width:6%;background-color: #c4c4c4"></div>
             <div class=" px-3" style="width:68%">
