@@ -21,5 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //取得診所資料
 Route::get('/clinic', 'App\Http\Controllers\ClinicController@getClinicInformation');
 
+//取得診所資料
+Route::get('/clinic/doctor', 'App\Http\Controllers\ClinicController@getDoctorFreeTime');
+
 //建立預約
 Route::post('/reservation', 'App\Http\Controllers\ReservationController@createReservation');
