@@ -7,6 +7,17 @@ use App\Models\Reservation;
 class ReservationRepository
 {
     /**
+     * 取得特定診所特定日子的預約
+     * @param  Integer $clinic_id    [診所id]
+     * @param  Date $date    [特定日子]
+     */
+    public function getReservationByClinicIdAndDate($clinic_id, $date)
+    {
+        $reservation = Reservation::where('clinic_id', $clinic_id)->where('date', 'like', $date . '%')->get();
+        return $reservation;
+    }
+
+    /**
      * 新增預約
      * @param  Array $reservation_data     [預約資訊]
      */
