@@ -44,4 +44,13 @@ class ReservationRepository
         $reservation->clinic_id = $reservation_data['clinic_id'];
         $reservation->save();
     }
+    /**
+     * 刪除預約
+     * @param  Array $remove_reservation_data     [刪除預約資訊]
+     */
+    public function removeReservation(&$remove_reservation_data)
+    {
+        $reservation = Reservation::find($remove_reservation_data['reservation_id']);
+        $reservation->delete();
+    }
 }
