@@ -27,4 +27,9 @@ class Doctor extends User
     {
         return $this->belongsTo('App\Models\Clinic', 'clinic_id', 'id');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany('App\Models\Reservation', 'doctor_id', 'id');
+    }
 }

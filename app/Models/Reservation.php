@@ -13,4 +13,14 @@ class Reservation extends Model
     public $timestamps = false;
 
     protected $fillable = ['customer_name', 'pet_name', 'clinic_id', 'date'];
+
+    public function clinic()
+    {
+        return $this->belongsTo('App\Models\Clinic', 'clinic_id', 'id');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo('App\Models\Doctor', 'doctor_id', 'id');
+    }
 }

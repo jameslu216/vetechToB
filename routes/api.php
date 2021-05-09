@@ -28,4 +28,4 @@ Route::get('/clinic/doctor', 'App\Http\Controllers\ClinicController@getDoctorFre
 Route::post('/reservation', 'App\Http\Controllers\ReservationController@createReservation');
 
 //刪除預約
-Route::get('/reservation/remove', 'App\Http\Controllers\ReservationController@removeReservation');
+Route::post('/reservation/remove', 'App\Http\Controllers\ReservationController@removeReservation');

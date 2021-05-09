@@ -50,7 +50,7 @@ class ReservationController extends BaseController
     {
         $remove_reservation_data = $request->all();
         if (
-            empty($remove_reservation_data['reservation_id']) ||
+            empty($remove_reservation_data['reservation_id'])
         ) {
             return response('error', 400);
         }
