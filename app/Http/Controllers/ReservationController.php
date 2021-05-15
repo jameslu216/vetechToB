@@ -41,6 +41,7 @@ class ReservationController extends BaseController
         $this->ReservationService->createReservation($reservation_data);
         return response()->json($reservation_data, 200);
     }
+ 
     /**
      * 刪除預約
      * @param  Request $request     [description]
@@ -57,5 +58,23 @@ class ReservationController extends BaseController
         }
         $this->ReservationService->removeReservation($remove_reservation_data);
         return response()->json($remove_reservation_data, 200);
+    }
+
+    /**
+     * 修改預約
+     * @param  Request $request     [description]
+     * @return Json  $modify_reservation_data    [修改Reservation資料]
+     */
+    public function removeReservation(Request $request)
+    {
+        $modify_reservation_data = $request->all();
+        if (
+            empty($remove_reservation_data['reservation_id']) || 
+            empty($remove_reservation_data['clinic_id'])
+        ) {
+            return response('error', 400);
+        }
+        $this->ReservationService->modifyReservation($modify_reservation_data);
+        return response()->json($modify_reservation_data, 200);
     }
 }

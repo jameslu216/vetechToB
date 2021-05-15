@@ -26,7 +26,7 @@ class CreateReservationTable extends Migration
             $table->integer('pet_age')->nullable();
             $table->string('serve_type')->nullable();
             $table->string('note')->nullable();
-            $table->dateTime('date');
+            $table->dateTime('datetime');
             $table->integer('doctor_id')->nullable();
             $table->integer('customer_id')->nullable();
         });

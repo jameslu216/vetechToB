@@ -12,7 +12,11 @@ class Reservation extends Model
     protected $table = 'reservation';
     public $timestamps = false;
 
-    protected $fillable = ['customer_name', 'pet_name', 'clinic_id', 'date'];
+    protected $fillable = ['customer_name', 'pet_name', 'clinic_id', 'datetime'];
+
+    public function datetime() {
+        return $this->attributes['datetime'];
+    }
 
     public function clinic()
     {

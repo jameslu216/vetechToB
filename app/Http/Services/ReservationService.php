@@ -20,6 +20,7 @@ class ReservationService
     {
         $this->ReservationRepository->createReservation($reservation_data);
     }
+
     /**
      * 刪除預約
      * @param  Array $remove_reservation_data     [刪除Reservation資訊]
@@ -27,5 +28,14 @@ class ReservationService
     public function removeReservation(&$remove_reservation_data)
     {
         $this->ReservationRepository->removeReservation($remove_reservation_data);
+    }
+
+    /**
+     * 修改預約
+     * @param  Array $modify_reservation_data     [修改Reservation資訊]
+     */
+    public function modifyReservation(&$modify_reservation_data)
+    {
+        $this->ReservationRepository->modifyReservation($modify_reservation_data);
     }
 }
