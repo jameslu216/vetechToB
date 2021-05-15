@@ -22,12 +22,21 @@ class ReservationService
     }
 
     /**
+     * 取得該日預約
+     * @param  Array $get_reservations_data     [刪除Reservation資訊]
+     */
+    public function getReservationData($clinic_id, $date)
+    {
+        return $this->ReservationRepository->getReservationData($clinic_id, $date);
+    }
+
+    /**
      * 刪除預約
      * @param  Array $remove_reservation_data     [刪除Reservation資訊]
      */
     public function removeReservation(&$remove_reservation_data)
     {
-        $this->ReservationRepository->removeReservation($remove_reservation_data);
+        return $this->ReservationRepository->removeReservation($remove_reservation_data);
     }
 
     /**

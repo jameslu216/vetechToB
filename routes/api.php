@@ -25,7 +25,13 @@ Route::get('/clinic', 'App\Http\Controllers\ClinicController@getClinicInformatio
 Route::get('/clinic/doctor', 'App\Http\Controllers\ClinicController@getDoctorFreeTime');
 
 //建立預約
-Route::post('/reservation', 'App\Http\Controllers\ReservationController@createReservation');
+Route::post('/reservation/create', 'App\Http\Controllers\ReservationController@createReservation');
+
+//取得預約
+Route::get('/reservation', 'App\Http\Controllers\ReservationController@getReservationInformation');
 
 //刪除預約
 Route::post('/reservation/remove', 'App\Http\Controllers\ReservationController@removeReservation');
+
+//修改預約
+Route::post('/reservation/modify', 'App\Http\Controllers\ReservationController@modifyReservation');

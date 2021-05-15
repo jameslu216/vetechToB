@@ -25,7 +25,7 @@ class ReservationFactory extends Factory
     public function definition()
     {
         return [
-
+            'id' => $this->faker->unique()->randomNumber(7),
             'customer_name' => $this->faker->name,
             'phone' => $this->faker->phoneNumber,
             'pet_name' => $this->faker->name,
@@ -34,7 +34,7 @@ class ReservationFactory extends Factory
             'pet_age' => 2,
             'serve_type' => "surgery",
             'note' => "No note, no",
-            'date' => $this->faker->dateTime(),
+            'datetime' => $this->faker->dateTime(),
             // FIXME don't know whether this add foreign key method is valid
             'doctor_id' => $this->faker->numberBetween(1, Doctor::count()),
             'clinic_id' => $this->faker->numberBetween(1, Clinic::count())

@@ -3,6 +3,7 @@
 namespace App\Http\Repositorys;
 
 use App\Models\Reservation;
+use \Datetime;
 
 class ReservationRepository
 {
@@ -46,6 +47,22 @@ class ReservationRepository
     }
 
     /**
+     * 取得當日預約
+     * @param  Int $clinic_id [診所id]
+     * @param  Date $date     [日期]
+     * @return Object  $reservation_data    [預約資料]
+     */
+    public function getReservationData($clinic_id, $date)
+    {
+        // find() only works with single-column keys, so we use where() here
+        $date = DateTime::createFromFormat('Y-m-d', $date);
+        $reservations = Reservation::where('clinic_id', '=', $clinic_id)
+                                    ->whereDate('datetime', '=', $date)
+                                    ->get();
+        return $reservations;
+    }
+
+    /**
      * 刪除預約
      * @param  Array $remove_reservation_data     [刪除Reservation資訊]
      */
@@ -55,7 +72,12 @@ class ReservationRepository
         $reservation = Reservation::where('id', '=', $remove_reservation_data['reservation_id'])
                                     ->where('clinic_id', '=', $remove_reservation_data['clinic_id'])
                                     ->first();
-        $reservation->delete();
+        if ($reservation) {
+            $reservation->delete();            
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -69,25 +91,27 @@ class ReservationRepository
                                     ->where('clinic_id', '=', $modify_reservation_data['clinic_id'])
                                     ->first();
         if ($reservation) {
-            $update_array = array();
-            if ($modify_reservation_data['doctor_id']) {
-                array_push($update_array, 'doctor_id' => $modify_reservation_data['doctor_id']);
+            $update_array = [];
+            // should add in Reservation Model fillable
+            if (!empty($modify_reservation_data['doctor_id'])) {
+                $update_array['doctor_id'] = intval($modify_reservation_data['doctor_id']);
             }
-            $datetime = $reservation->datetime();
-            if ($modify_reservation_data['date']) {
+            $datetime_str = $reservation->datetime();
+            $datetime = Datetime::createFromFormat('Y-m-d H:i:s', $datetime_str);
+            if (!empty($modify_reservation_data['date'])) {
                 $date = DateTime::createFromFormat('Y-m-d', $modify_reservation_data['date']);
                 $year = intval($date->format('Y'));
                 $month = intval($date->format('m'));
                 $day = intval($date->format('d'));
                 $datetime->setDate($year, $month, $day);
             }
-            if ($modify_reservation_data['time']) {
+            if (!empty($modify_reservation_data['time'])) {
                 $time = DateTime::createFromFormat('H:i', $modify_reservation_data['time']);
-                $hour = intval($date->format('H'));
-                $minute = intval($date->format('i'));
+                $hour = intval($time->format('H'));
+                $minute = intval($time->format('i'));
                 $datetime->setTime($hour, $minute);
             }
-            array_push($update_array, 'datetime' => $datetime);
+            $update_array['datetime'] = $datetime->format('Y-m-d H:i:s');
             $reservation->update($update_array);            
         }
     }
