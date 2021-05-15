@@ -50,7 +50,10 @@ class ReservationRepository
      */
     public function removeReservation(&$remove_reservation_data)
     {
-        $reservation = Reservation::find($remove_reservation_data['reservation_id']);
+        // find() only works with single-column keys, so we use where() here
+        $reservation = Reservation::where('id', '=', $remove_reservation_data['reservation_id'])
+                                    ->where('clinic_id', '=', $remove_reservation_data['clinic_id'])
+                                    ->first();
         $reservation->delete();
     }
 }

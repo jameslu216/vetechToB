@@ -14,7 +14,10 @@ class CreateReservationTable extends Migration
     public function up()
     {
         Schema::create('reservation', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->unsigned();
+            $table->integer('clinic_id')->unsigned();
+            $table->primary(['id', 'clinic_id']);
+
             $table->string('customer_name');
             $table->string('phone');
             $table->string('pet_name');
@@ -25,7 +28,7 @@ class CreateReservationTable extends Migration
             $table->string('note')->nullable();
             $table->dateTime('date');
             $table->integer('doctor_id')->nullable();
-            $table->integer('clinic_id');
+            $table->integer('customer_id')->nullable();
         });
     }
 

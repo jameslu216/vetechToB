@@ -23,4 +23,10 @@ class Reservation extends Model
     {
         return $this->belongsTo('App\Models\Doctor', 'doctor_id', 'id');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer', 'customer_id', 'id');
+    }
+
 }
