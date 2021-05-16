@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReservationTable extends Migration
+class DiagnosisRecordTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateReservationTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservation', function (Blueprint $table) {
+        Schema::create('diagnosis_record', function (Blueprint $table) {
             $table->integer('id')->unsigned();
             $table->integer('clinic_id')->unsigned();
             $table->primary(['id', 'clinic_id']);
@@ -27,6 +27,7 @@ class CreateReservationTable extends Migration
             $table->integer('pet_age')->nullable();
             $table->string('serve_type')->nullable();
             $table->string('note')->nullable();
+            $table->string('diagnosis_note')->nullable();
             $table->dateTime('datetime');
             $table->integer('doctor_id')->nullable();
         });
@@ -39,6 +40,6 @@ class CreateReservationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reservation');
+        Schema::dropIfExists('diagnosis_record');
     }
 }

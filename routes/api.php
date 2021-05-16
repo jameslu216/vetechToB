@@ -35,3 +35,6 @@ Route::post('/reservation/remove', 'App\Http\Controllers\ReservationController@r
 
 //修改預約
 Route::post('/reservation/modify', 'App\Http\Controllers\ReservationController@modifyReservation');
+
+//將預約移至看診紀錄
+Route::post('/diagnosis_record/move_and_create', 'App\Http\Controllers\DiagnosisRecordController@moveAndCreateDiagnosisRecord');

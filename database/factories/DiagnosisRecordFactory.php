@@ -2,21 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Reservation;
+use App\Models\DiagnosisRecord;
 use App\Models\Doctor;
 use App\Models\Clinic;
-use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 
-class ReservationFactory extends Factory
+class DiagnosisRecordFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Reservation::class;
+    protected $model = DiagnosisRecord::class;
 
     /**
      * Define the model's default state.
@@ -28,7 +27,6 @@ class ReservationFactory extends Factory
         return [
             'id' => $this->faker->unique()->randomNumber(7),
             'customer_name' => $this->faker->name,
-            'customer_id' => $this->faker->numberBetween(1, Customer::count()),
             'phone' => $this->faker->phoneNumber,
             'pet_name' => $this->faker->name,
             'pet_variety' => "doge",
@@ -36,6 +34,7 @@ class ReservationFactory extends Factory
             'pet_age' => 2,
             'serve_type' => "surgery",
             'note' => "No note, no",
+            'diagnosis_note' => "This is diagnosis note.",
             'datetime' => $this->faker->dateTime(),
             // FIXME don't know whether this add foreign key method is valid
             'doctor_id' => $this->faker->numberBetween(1, Doctor::count()),

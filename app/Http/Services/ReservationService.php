@@ -22,8 +22,19 @@ class ReservationService
     }
 
     /**
+     * 取得特定預約
+     * @param  Int $clinic_id     [診所id]
+     * @param  Int $reservation_id     [預約id]
+     */
+    public function getReservationById($clinic_id, $reservation_id)
+    {
+        return $this->ReservationRepository->getReservationById($clinic_id, $reservation_id);
+    }
+
+    /**
      * 取得該日預約
-     * @param  Array $get_reservations_data     [刪除Reservation資訊]
+     * @param  Array $clinic_id     [診所id]
+     * @param  Datetime $date     [日期]
      */
     public function getReservationData($clinic_id, $date)
     {

@@ -10,7 +10,7 @@ class Customer extends User
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'Customer';
+    protected $table = 'customer';
     public $timestamps = false;
 
     public function user()

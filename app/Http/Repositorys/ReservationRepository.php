@@ -27,12 +27,14 @@ class ReservationRepository
         $reservation = Reservation::firstOrNew(
             [
                 'customer_name' => $reservation_data['customer_name'],
+                'customer_id' => $reservation_data['customer_id'],
                 'pet_name' => $reservation_data['pet_name'],
                 'datetime' => $reservation_data['date'],
                 'clinic_id' => $reservation_data['clinic_id'],
             ]
         );
         $reservation->customer_name = $reservation_data['customer_name'];
+        $reservation->customer_id = $reservation_data['customer_id'];
         $reservation->phone = $reservation_data['phone'];
         $reservation->pet_name = $reservation_data['pet_name'];
         $reservation->pet_variety = $reservation_data['pet_variety'];
@@ -47,10 +49,25 @@ class ReservationRepository
     }
 
     /**
+     * 取得指定預約
+     * @param  Int $clinic_id [診所id]
+     * @param  Int $reservation_id     [預約id]
+     * @return Object  $reservation    [預約資料]
+     */
+    public function getReservationById($clinic_id, $reservation_id)
+    {
+        // find() only works with single-column keys, so we use where() here
+        $reservation = Reservation::where('clinic_id', '=', $clinic_id)
+                                    ->where('id', '=', $reservation_id)
+                                    ->first();
+        return $reservation;
+    }
+
+    /**
      * 取得當日預約
      * @param  Int $clinic_id [診所id]
      * @param  Date $date     [日期]
-     * @return Object  $reservation_data    [預約資料]
+     * @return Object  $reservations    [預約資料]
      */
     public function getReservationData($clinic_id, $date)
     {
@@ -96,7 +113,7 @@ class ReservationRepository
             if (!empty($modify_reservation_data['doctor_id'])) {
                 $update_array['doctor_id'] = intval($modify_reservation_data['doctor_id']);
             }
-            $datetime_str = $reservation->datetime();
+            $datetime_str = $reservation->datetime;
             $datetime = Datetime::createFromFormat('Y-m-d H:i:s', $datetime_str);
             if (!empty($modify_reservation_data['date'])) {
                 $date = DateTime::createFromFormat('Y-m-d', $modify_reservation_data['date']);
