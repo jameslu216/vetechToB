@@ -15,10 +15,11 @@ class DiagnosisRecordRepository
      */
     public function createDiagnosisRecord(&$diagnosis_note, &$reservation)
     {
-        echo $reservation;
+        $next_id = DiagnosisRecord::where('clinic_id', '=', $reservation->clinic_id)
+                                    ->max('id') + 1;
         $diagnosis_record = DiagnosisRecord::firstOrNew(
             [
-                'id' => DiagnosisRecord::count(),
+                'id' => $next_id,
                 'customer_name' => $reservation->customer_name,
                 'customer_id' => $reservation->customer_id,
                 'pet_name' => $reservation->pet_name,
