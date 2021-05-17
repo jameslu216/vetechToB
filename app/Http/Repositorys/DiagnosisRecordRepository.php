@@ -44,4 +44,19 @@ class DiagnosisRecordRepository
         return $diagnosis_record;
     }
 
+
+    /**
+     * 取得看診紀錄
+     * @param  Int $clinic_id [診所id]
+     * @param  Int $customer_id     [顧客id]
+     * @return Object  $diagnosis_record_data    [看診紀錄資料]
+     */
+    public function getDiagnosisRecordById($clinic_id, $customer_id)
+    {
+        // find() only works with single-column keys, so we use where() here
+        $diagnosis_record_data = DiagnosisRecord::where('clinic_id', '=', $clinic_id)
+                                    ->where('customer_id', '=', $customer_id)
+                                    ->get();
+        return $diagnosis_record_data;
+    }
 }

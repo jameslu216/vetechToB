@@ -36,7 +36,6 @@ class DiagnosisRecordFactory extends Factory
             'note' => "No note, no",
             'diagnosis_note' => "This is diagnosis note.",
             'datetime' => $this->faker->dateTime(),
-            // FIXME don't know whether this add foreign key method is valid
             'doctor_id' => $this->faker->numberBetween(1, Doctor::count()),
             'clinic_id' => $this->faker->numberBetween(1, Clinic::count())
         ];

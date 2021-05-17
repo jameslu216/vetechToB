@@ -37,4 +37,10 @@ Route::post('/reservation/remove', 'App\Http\Controllers\ReservationController@r
 Route::post('/reservation/modify', 'App\Http\Controllers\ReservationController@modifyReservation');
 
 //將預約移至看診紀錄
-Route::post('/diagnosis_record/move_and_create', 'App\Http\Controllers\DiagnosisRecordController@moveAndCreateDiagnosisRecord');
+Route::post('/diagnosis/record/move_and_create', 'App\Http\Controllers\DiagnosisRecordController@moveAndCreateDiagnosisRecord');
+
+//取得看診紀錄
+Route::get('/diagnosis/record', 'App\Http\Controllers\DiagnosisRecordController@getDiagnosisRecord');
+
+//取得看診時間
+Route::post('/diagnosis/info', 'App\Http\Controllers\DiagnosisInfoController@getDiagnosisInfo');

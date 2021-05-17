@@ -51,4 +51,23 @@ class DiagnosisRecordController extends BaseController
         }
     }
 
+    /**
+     * 查詢看診紀錄
+     * @param  Request $request     [description]
+     * @return Json  $diagnosis_record_data    [看診紀錄資料]
+     */
+    public function getDiagnosisRecord(Request $request)
+    {
+        $clinic_id = $request->clinic_id;
+        $customer_id = $request->customer_id;
+        if (
+            empty($clinic_id) ||
+            empty($customer_id)
+        ) {
+            return response('error', 400);
+        }
+        $diagnosis_record_data = $this->DiagnosisRecordService->getDiagnosisRecordById($clinic_id, $customer_id);
+        return response()->json($diagnosis_record_data, 200);            
+    }
+
 }
