@@ -162,9 +162,7 @@
 
         <div class="row ml-3 mt-2">
           <div class="leftblock col-2 p-0">
-            <label 
-class="normal_text"
-             for="pet-reminder"></label>備註
+            <label class="normal_text" for="pet-reminder"></label>備註
           </div>
           <div class="col-9 p-0">
             <textarea
@@ -176,7 +174,7 @@ class="normal_text"
           </div>
         </div>
 
-        <div class="row m-0">
+        <div class="row mt-3 m-0">
           <div class="leftblock m-3 col-5 blacktitle p-0">
             <span>就診日期</span>
           </div>
@@ -204,7 +202,7 @@ class="normal_text"
                     class="col-4 p-0 my-3"
                     v-for="(time, index) in servable_time"
                     :key="index"
-                    @click="submitBooking(time, $event)"
+                    @click="selected_time=time"
                   >
                     <span
                       :class="selected_time == time ? 'Active' : 'notActive'"
@@ -247,7 +245,65 @@ class="normal_text"
 
       <div class="row mt-3">
         <div class="col-12">
-          <div class="text-center booking_button">立即預約</div>
+          <!-- <b-button class="text-center booking_button" @click="confirmBooking"
+            >Simple msgBoxConfirm</b-button
+          > -->
+
+          <button
+            type="button"
+            class="btn booking_button"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            確認預約
+          </button>
+
+          <!-- Modal -->
+          <div
+            class="modal fade confirm_modal"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">確認預約</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  您的預約日期為{{ "   " }}{{ selected_date }}{{ "   "
+                  }}{{ selected_time }}
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                    @click="submitBooking"
+                  >
+                    確認預約
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -262,6 +318,7 @@ class="normal_text"
 export default {
   data() {
     return {
+      bookingStatus: "",
       vet_name: "聯 盟 動 物 醫 院",
       vet_branch_name: "仁武總院",
       vet_work_time: {},
@@ -298,8 +355,8 @@ export default {
   },
   mounted() {},
   methods: {
-    submitBooking(time, event) {
-      this.selected_time = time;
+    submitBooking() {
+      console.log('預約成功')
       //送出預約api
     },
     showServableTime() {
@@ -346,6 +403,13 @@ export default {
   margin-top: 50px;
 }
 @media screen and (max-width: 767px) {
+  .confirm_modal {
+    position: fixed;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    top: 40%;
+  }
   .booking_button {
     background-color: #33b6b0;
     color: white;
@@ -354,7 +418,6 @@ export default {
     height: 40px;
     font-size: 18px;
     font-weight: bold;
-    line-height: 40px;
     position: absolute;
     margin-left: -75px;
     left: 50%;
