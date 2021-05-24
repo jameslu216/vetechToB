@@ -202,7 +202,7 @@
                     class="col-4 p-0 my-3"
                     v-for="(time, index) in servable_time"
                     :key="index"
-                    @click="selected_time=time"
+                    @click="selected_time = time"
                   >
                     <span
                       :class="selected_time == time ? 'Active' : 'notActive'"
@@ -315,9 +315,21 @@
 </template>
 
 <script>
+import httpAPI from '../httpAPI.js';
 export default {
   data() {
     return {
+      clinic:{
+        id: 1,
+        name: "",
+        address: "",
+        introduction: "",
+        service_type: "",
+        phone: "",
+        picture: "",
+        serve_times: [
+        ]
+      },
       bookingStatus: "",
       vet_name: "聯 盟 動 物 醫 院",
       vet_branch_name: "仁武總院",
@@ -326,7 +338,8 @@ export default {
       vet_phone_number: "(07)2730964 #20",
       value: "",
       formatted_date: "",
-      selected_date: "",
+      selected_date: "2021-5-22",
+      selected_day: "1",
       selected_time: "",
       customer_name: "",
       customer_phone_number: "",
@@ -353,17 +366,46 @@ export default {
       ],
     };
   },
+  created () {
+    let self = this
+    //取得診所資訊
+    httpAPI.getClinic(this.clinic.id).then(function(response) {
+        console.log(response.data);
+        self.clinic = response.data;
+    });
+  },
   mounted() {},
   methods: {
     submitBooking() {
       console.log('預約成功')
       //送出預約api
+      let data = {
+        customer_name: "呂學好",
+        phone: "0900000000",
+        pet_name: "寶貝",
+        pet_variety: "女人",
+        pet_gender: "female",
+        pet_age: "27",
+        serve_type: "打針",
+        note: "嗨嗨",
+        date: "2021-06-22 11:00",
+        doctor_id: "1",
+        clinic_id: this.clinic.id
+      };
+      //預約
+      httpAPI.addReservation(data);
     },
     showServableTime() {
       // selected_date:"2021-05-15"
       // formatted_date:"2021/5/15"
       // 選定日期後 打 http://127.0.0.1:8000/api/clinic/doctor?clinic_id=1&date=2021-05-10&day=1
       // this.servable_time = response.times;
+      let self = this;
+      //取得當日空閑時間
+      httpAPI.getServableTime(this.clinic.id, this.selected_date, this.selected_day).then(function(response) {
+        console.log(response.data);
+        // this.servable_time = response.times;
+      });
     },
     dateDisabled(ymd, date) {
       // Disable weekends (Sunday = `0`, Saturday = `6`) and

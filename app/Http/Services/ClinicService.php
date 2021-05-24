@@ -41,10 +41,12 @@ class ClinicService
                 return $diagnosis_times->keyBy('time_zone');
             });
             $time_collection = collect([]);
+            $diagnosis_times[$day] = empty($diagnosis_times[$day]) ? collect() : $diagnosis_times[$day];
             foreach($diagnosis_times[$day] as $diagnosis_time){
                 $time_collection = $time_collection->merge($this->getTimeCollectonByStartAndEnd($diagnosis_time->start_at, $diagnosis_time->end_at));
             }
-            $reservation = $this->ReservationRepository->getReservationByClinicIdAndDate($clinic_id, $date)->groupBy('doctor_id')[$doctor->id];
+            $reservation = $this->ReservationRepository->getReservationByClinicIdAndDate($clinic_id, $date)->groupBy('doctor_id');
+            $reservation = empty($reservation[$doctor->id]) ? collect([]) : $reservation[$doctor->id];
             $reservation = $reservation->pluck('date')->map(function ($date) {
                 return date('H:i', strtotime($date));
             });
