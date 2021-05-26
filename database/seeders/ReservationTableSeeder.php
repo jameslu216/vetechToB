@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Customer;
+use App\Models\Reservation;
 
-class CustomerTableSeeder extends Seeder
+class ReservationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +14,6 @@ class CustomerTableSeeder extends Seeder
      */
     public function run()
     {
-        Customer::factory()->count(5)->create()->each(function ($customer) {
-        });
+        Reservation::factory()->count(5)->create();
     }
 }

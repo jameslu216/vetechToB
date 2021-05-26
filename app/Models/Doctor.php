@@ -15,7 +15,12 @@ class Doctor extends User
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id')->first();
+    }
+
+    public function diagnosisInfos()
+    {
+        return $this->hasMany('App\Models\DiagnosisInfo', 'doctor_id', 'id');
     }
 
     public function diagnosisTimes()
@@ -26,5 +31,10 @@ class Doctor extends User
     public function clinic()
     {
         return $this->belongsTo('App\Models\Clinic', 'clinic_id', 'id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany('App\Models\Reservation', 'doctor_id', 'id');
     }
 }
