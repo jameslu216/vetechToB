@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import { FormCheckboxPlugin,InputGroupPlugin,FormInputPlugin,FormDatepickerPlugin,FormTextareaPlugin,LayoutPlugin} from 'bootstrap-vue'
+import { FormCheckboxPlugin,CalendarPlugin,InputGroupPlugin,FormInputPlugin,FormDatepickerPlugin,FormTextareaPlugin,LayoutPlugin} from 'bootstrap-vue'
+Vue.use(CalendarPlugin)
 Vue.use(FormDatepickerPlugin)
 Vue.use(InputGroupPlugin)
 Vue.use(FormInputPlugin)

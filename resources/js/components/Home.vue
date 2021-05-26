@@ -1,7 +1,7 @@
 <template>
     <div
         id="app"
-        class="row"
+        class="row  m-0"
         style="
       z-index: -1;
       padding-bottom: 50px;
