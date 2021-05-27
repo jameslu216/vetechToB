@@ -18,6 +18,11 @@ class Doctor extends User
         return $this->belongsTo('App\Models\User', 'user_id', 'id')->first();
     }
 
+    public function name()
+    {
+        return $this->user()->name;
+    }
+
     public function diagnosisInfos()
     {
         return $this->hasMany('App\Models\DiagnosisInfo', 'doctor_id', 'id');

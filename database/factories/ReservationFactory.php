@@ -7,7 +7,8 @@ use App\Models\Doctor;
 use App\Models\Clinic;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use \Datetime;
+use \DateInterval;
 
 class ReservationFactory extends Factory
 {
@@ -25,6 +26,14 @@ class ReservationFactory extends Factory
      */
     public function definition()
     {
+        if (Reservation::count() == 0) {
+            $latest_reservation = DateTime::createFromFormat('Y-m-d H:i:s', '2021-05-28 22:11:33');
+        } else {
+            $latest_reservation = DateTime::createFromFormat('Y-m-d H:i:s', Reservation::latest('datetime')->first()->datetime); 
+            $latest_reservation->modify('+ 1 hour');
+        }
+        $doctor_id = $this->faker->numberBetween(1, Doctor::count());
+        $clinic_id = Doctor::find($doctor_id)->clinic_id;
         return [
             'id' => $this->faker->unique()->randomNumber(7),
             'customer_name' => $this->faker->name,
@@ -36,10 +45,9 @@ class ReservationFactory extends Factory
             'pet_age' => 2,
             'serve_type' => "surgery",
             'note' => "No note, no",
-            'datetime' => $this->faker->dateTime(),
-            // FIXME don't know whether this add foreign key method is valid
-            'doctor_id' => $this->faker->numberBetween(1, Doctor::count()),
-            'clinic_id' => $this->faker->numberBetween(1, Clinic::count())
+            'datetime' => $latest_reservation,
+            'doctor_id' => $doctor_id,
+            'clinic_id' => $clinic_id
         ];
     }
 }

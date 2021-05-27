@@ -3,6 +3,7 @@
 namespace App\Http\Repositorys;
 
 use App\Models\Reservation;
+use App\Models\Doctor;
 use \Datetime;
 
 class ReservationRepository
@@ -75,7 +76,15 @@ class ReservationRepository
         $date = DateTime::createFromFormat('Y-m-d', $date);
         $reservations = Reservation::where('clinic_id', '=', $clinic_id)
                                     ->whereDate('datetime', '=', $date)
-                                    ->get();
+                                    ->get()->each(function(&$reservation) {
+                    $doctor = Doctor::where('id', '=', $reservation['doctor_id'])->first();
+                    echo $doctor;
+                    $reservation['doctor_name'] = $doctor->name();
+                    $datetime = Datetime::createFromFormat('Y-m-d H:i:s', $reservation['datetime']);
+                    $reservation['date'] = $datetime->format('Y-m-d');
+                    $reservation['time'] = $datetime->format('H:i');
+                }
+                )->makeHidden(['doctor_id', 'datetime']);
         return $reservations;
     }
 
