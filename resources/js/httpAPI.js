@@ -22,4 +22,9 @@ export default {
             data: data
         });
     },
+    getReservation: function (clinic_id,date) {
+        let url = `${this.BASE_API_URL}/reservation?clinic_id=${clinic_id}&date=${date}`;
+        return axios.get(url);
+    },
+
 }

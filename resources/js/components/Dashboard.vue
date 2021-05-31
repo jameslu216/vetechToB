@@ -9,7 +9,7 @@
               <span>Upcoming Book</span>
             </div>
             <div class="row item_title">
-              <div class="title_colname_s title_text">Num</div>
+              <div class="title_colname_s title_text">ID</div>
               <div class="title_colname_s title_text">日期</div>
               <div class="title_colname_s title_text">時間</div>
               <div class="title_colname_s title_text">寵物姓名</div>
@@ -18,26 +18,24 @@
               <div class="title_colname_s title_text">負責醫生</div>
               <div class="title_colname_s title_text">治療項目</div>
               <div class="title_colname_m title_text">診前備註</div>
-              <div class="title_colname_s title_text">客戶來源</div>
               <div class="title_colname_m title_text">電話號碼</div>
               <div class="title_colname_s title_text">過往紀錄</div>
             </div>
             <div
-              v-for="(item, index) in booking_record"
+              v-for="(item, index) in reservation"
               class="row py-3 mt-2 mb-2 record_col"
               :key="index"
             >
-              <div class="record_content_s">{{ item.num }}</div>
+              <div class="record_content_s">{{ item.id }}</div>
               <div class="record_content_s">{{ item.date }}</div>
               <div class="record_content_s">{{ item.time }}</div>
               <div class="record_content_s">{{ item.pet_name }}</div>
-              <div class="record_content_s">{{ item.gender }}</div>
-              <div class="record_content_s">{{ item.owner_name }}</div>
+              <div class="record_content_s">{{ item.pet_gender }}</div>
+              <div class="record_content_s">{{ item.customer_name }}</div>
               <div class="record_content_s">{{ item.doctor }}</div>
-              <div class="record_content_s">{{ item.appointment }}</div>
-              <div class="record_content_m">{{ item.pre_note }}</div>
-              <div class="record_content_s">{{ item.booking_from }}</div>
-              <div class="record_content_m">{{ item.phone_num }}</div>
+              <div class="record_content_s">{{ item.serve_type }}</div>
+              <div class="record_content_m">{{ item.note }}</div>
+              <div class="record_content_m">{{ item.phone }}</div>
               <button class="record_content_s p-0 m-0">紀錄</button>
             </div>
           </div>
@@ -111,9 +109,12 @@
   </div>
 </template>
 <script>
+import httpAPI from "../httpAPI.js";
+
 export default {
   data() {
     return {
+      clinic_id: "1",
       doctor_diagnosis_list: [
         {
           doctor_id: "1",
@@ -139,149 +140,18 @@ export default {
           ],
         },
       ],
-      booking_record: [
+      reservation: [
         {
-          num: "023",
+          id: "023",
           date: "03/16",
           time: "15:00",
           pet_name: "BoBo",
-          gender: "F(S)",
-          owner_name: "陳先生",
+          pet_gender: "F(S)",
+          customer_name: "陳先生",
           doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ToBo",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
-        },
-        {
-          num: "024",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "ANNUAL",
-          gender: "F(S)",
-          owner_name: "陳先生",
-          doctor: "Dr.Chen",
-          appointment: "定期健檢",
-          pre_note: "發現小型肉塊、腳受傷",
-          booking_from: "Booking",
-          phone_num: "0912345678",
+          serve_type: "定期健檢",
+          note: "發現小型肉塊",
+          phone: "0912345678",
         },
       ],
       looking_list: [
@@ -300,14 +170,34 @@ export default {
       ],
     };
   },
+  mounted() {
+    const now = new Date();
+    let month = now.getMonth() + 1;
+    console.log(typeof month);
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    const today = `${now.getFullYear()}-${month}-${now.getDate()}`;
+    this.getReservation(today);
+  },
+  methods: {
+    getReservation(today) {
+      const vm = this;
+      httpAPI.getReservation(this.clinic_id, today).then(function (response) {
+        console.log(response.data)
+        console.log(vm.reservation)
+        vm.reservation = response.data;
+      });
+    },
+  },
 };
 </script>
 <style lang="scss">
 .col-0-5 {
-  width:5%;
+  width: 5%;
 }
-.col-11-5{
-    width:95%;
+.col-11-5 {
+  width: 95%;
 }
 .title_text {
   font-size: 18px;
