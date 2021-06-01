@@ -464,7 +464,7 @@ export default {
             const weekday = date.getDay();
             const day = date.getDate();
             for (var i = 0; i < this.clinic.serve_times.length; i++) {
-                if (weekday == this.clinic.serve_times[0].day) return false; // 代表15號跟20號可以按
+                if (weekday == this.clinic.serve_times[i].day) return false; // 代表15號跟20號可以按
             }
             // Return `true` if the date should be disabled
             return true;
