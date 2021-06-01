@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservation extends Model
+class DiagnosisRecord extends Model
 {
     use HasFactory;
 
-    protected $table = 'reservation';
+    protected $table = 'diagnosis_record';
     public $timestamps = false;
 
-    protected $fillable = ['customer_name', 'pet_name', 'clinic_id', 'datetime', 'doctor_id'];
+    protected $fillable = ['id', 'clinic_id', 'customer_name', 'customer_id', 'phone', 'pet_name', 'datetime', 'diagnosis_note'];
 
     public function clinic()
     {

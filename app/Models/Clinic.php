@@ -21,4 +21,9 @@ class Clinic extends Model
     {
         return $this->hasMany('App\Models\Doctor', 'clinic_id', 'id');
     }
+
+    public function reservations()
+    {
+        return $this->hasMany('App\Models\Reservation', 'clinic_id', 'id');
+    }
 }

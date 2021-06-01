@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Customer;
 
-class CustomerTableSeeder extends Seeder
+class DiagnosisTimeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +13,6 @@ class CustomerTableSeeder extends Seeder
      */
     public function run()
     {
-        Customer::factory()->count(5)->create()->each(function ($customer) {
-        });
+        //
     }
 }
