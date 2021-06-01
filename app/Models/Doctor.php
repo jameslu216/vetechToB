@@ -15,7 +15,7 @@ class Doctor extends User
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id')->first();
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     public function name()
