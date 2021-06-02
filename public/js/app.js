@@ -2782,7 +2782,7 @@ var routerSetting = {
   //因為Vue router 會自動產生hashtag(#)，俗果你覺得礙事可以加入這行
   routes: //ES6語法，當key和value一樣時可省略key
   [{
-    path: '',
+    path: '*',
     component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_3__.default,
     children: [{
       path: '/dashboard',
@@ -2791,9 +2791,6 @@ var routerSetting = {
       path: '/booking',
       component: _components_CustomerBooking_vue__WEBPACK_IMPORTED_MODULE_4__.default
     }]
-  }, {
-    path: '*',
-    component: _components_Notfound_vue__WEBPACK_IMPORTED_MODULE_5__.default
   } //之後新增路由皆可使用{path:'', component:''}
   ]
 };
