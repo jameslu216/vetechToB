@@ -18,7 +18,7 @@ const routerSetting = {
     routes: //ES6語法，當key和value一樣時可省略key
         [
             {
-                path: '',
+                path: '*',
                 component: Home,
                 children: [
                     {
@@ -31,11 +31,7 @@ const routerSetting = {
 
                 ],
             },
-            {
-                path: '*',
-                component: Notfound,
-            },
-
+          
             //之後新增路由皆可使用{path:'', component:''}
         ]
 }
