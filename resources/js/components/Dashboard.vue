@@ -20,6 +20,8 @@
               <div class="title_colname_m title_text">診前備註</div>
               <div class="title_colname_m title_text">電話號碼</div>
               <div class="title_colname_s title_text">過往紀錄</div>
+              <div class="title_colname_s title_text">進入診間</div>
+
             </div>
             <div
               v-for="(item, index) in reservation"
@@ -36,7 +38,9 @@
               <div class="record_content_s">{{ item.serve_type }}</div>
               <div class="record_content_m">{{ item.note }}</div>
               <div class="record_content_m">{{ item.phone }}</div>
-              <button class="record_content_s p-0 m-0">紀錄</button>
+              <div class="record_content_s "><button>紀錄</button></div>
+              <div class="record_content_s "><button>開始看診</button></div>
+
             </div>
           </div>
         </div>
@@ -78,19 +82,18 @@
                     <span>正在看診</span>
                   </div>
                   <div class="row item_title text-center">
-                    <div class="col-3 title_text">醫生</div>
-                    <div class="col-3 title_text">飼主</div>
-                    <div class="col-3 title_text">診室</div>
-                    <div class="col-3 title_text">離開</div>
+                    <div class="col-4 title_text">醫生</div>
+                    <div class="col-4 title_text">飼主</div>
+                    <div class="col-4 title_text">離開</div>
                   </div>
                   <div
                     class="row record_col text-center"
                     v-for="(object, index) in looking_list"
                     :key="index"
                   >
-                    <div class="col-3 p-0">{{ object.doctor }}</div>
-                    <div class="col-3 p-0">{{ object.doctor }}</div>
-                    <div class="col-3 p-0">room{{ index }}</div>
+                    <div class="col-4 p-0">{{ object.doctor }}</div>
+                    <div class="col-4 p-0">{{ object.doctor }}</div>
+                    <div class="col-4 p-0"><button>看診結束</button></div>
                   </div>
                 </div>
               </div>
@@ -179,6 +182,7 @@ export default {
     }
     const today = `${now.getFullYear()}-${month}-${now.getDate()}`;
     this.getReservation(today);
+    this.getDiagnosisInfo(today);
   },
   methods: {
     getReservation(today) {
@@ -187,6 +191,12 @@ export default {
         console.log(response.data)
         console.log(vm.reservation)
         vm.reservation = response.data;
+      });
+    },
+    getDiagnosisInfo(today) {
+      const vm = this;
+      httpAPI.getReservation(this.clinic_id, today).then(function (response) {
+        vm.doctor_diagnosis_list = response.data;
       });
     },
   },
