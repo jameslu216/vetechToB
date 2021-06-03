@@ -43,4 +43,4 @@ Route::post('/diagnosis/record/move_and_create', 'App\Http\Controllers\Diagnosis
 Route::get('/diagnosis/record', 'App\Http\Controllers\DiagnosisRecordController@getDiagnosisRecord');
 
 //取得看診時間
-Route::post('/diagnosis/info', 'App\Http\Controllers\DiagnosisInfoController@getDiagnosisInfo');
+Route::get('/diagnosis/info', 'App\Http\Controllers\DiagnosisInfoController@getDiagnosisInfo');
