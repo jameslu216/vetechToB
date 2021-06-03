@@ -25,15 +25,19 @@ class ReservationRepository
      */
     public function createReservation(&$reservation_data)
     {
+        $reservation_id = Reservation::where('clinic_id', '=', $reservation_data['clinic_id'])->max('id') + 1;
+
         $reservation = Reservation::firstOrNew(
             [
+                'id' => $reservation_id,
+                'clinic_id' => $reservation_data['clinic_id'],
                 'customer_name' => $reservation_data['customer_name'],
                 'customer_id' => $reservation_data['customer_id'],
                 'pet_name' => $reservation_data['pet_name'],
                 'datetime' => $reservation_data['date'],
-                'clinic_id' => $reservation_data['clinic_id'],
             ]
         );
+        $reservation->id = $reservation_id;
         $reservation->customer_name = $reservation_data['customer_name'];
         $reservation->customer_id = $reservation_data['customer_id'];
         $reservation->phone = $reservation_data['phone'];
