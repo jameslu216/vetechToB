@@ -350,7 +350,7 @@ export default {
 
         return {
             clinic: {
-                id: 1,
+                id: "1",
                 name: "",
                 address: "",
                 introduction: "",
@@ -418,8 +418,9 @@ export default {
             service_type=service_type.substr(0,service_type.length-1)
             //送出預約api
             let data = {
+                clinic_id: this.clinic.id,
                 customer_name: this.customer_name,
-                phone: this.customer_name,
+                phone: this.customer_phone_number,
                 pet_name: this.pet_name,
                 pet_variety: this.pet_variety,
                 pet_gender: this.pet_gender,
@@ -428,7 +429,6 @@ export default {
                 note: this.pet_note,
                 date: `${this.selected_date} ${this.selected_time}`,
                 doctor_id: "1",
-                clinic_id: this.clinic.id
             };
             //預約
             console.log(data)
