@@ -18,7 +18,7 @@ export default {
     addReservation: function (data) {
         axios({
             method: 'post',
-            url: this.BASE_API_URL + '/reservation',
+            url: this.BASE_API_URL + '/reservation/create',
             data: data
         });
     },
