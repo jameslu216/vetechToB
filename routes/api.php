@@ -34,7 +34,7 @@ Route::get('/clinic', 'App\Http\Controllers\ClinicController@getClinicInformatio
 Route::get('/clinic/doctor', 'App\Http\Controllers\ClinicController@getDoctorFreeTime');
 
 // 建立預約
-Route::post('/reservation/create', 'App\Http\Controllers\ReservationController@createReservation');
+Route::middleware('auth:api')->post('/reservation/create', 'App\Http\Controllers\ReservationController@createReservation');
 
 // 取得預約
 Route::get('/reservation', 'App\Http\Controllers\ReservationController@getReservationInformation');
