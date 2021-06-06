@@ -24,8 +24,8 @@ class ServeTimeFactory extends Factory
         return [
             'day' => rand(1,7),
             'time_zone' => rand(0,2),
-            'start_at' => $this->faker->time,
-            'end_at' => $this->faker->time,
+            'start_at' => "09:00",
+            'end_at' => "21:00",
         ];
     }
 }
