@@ -48,6 +48,9 @@ class ClinicController extends BaseController
         if (empty($clinic_id) || !is_numeric($clinic_id) || empty($date) || !is_numeric($day) || $day < 1 || $day > 7) {
             return response('error', 400);
         }
+        if($date < date("Y-m-d")){
+            return response()->json([], 200);
+        }
         $doctor_data = $this->ClinicService->getDoctorFreeData($clinic_id, $date, $day);
         return response()->json($doctor_data, 200);
     }

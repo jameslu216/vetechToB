@@ -51,6 +51,9 @@ class ClinicService
                 return date('H:i', strtotime($date));
             });
             $time_collection = $time_collection->diff($reservation); //醫生當天可用時間與被預約的時間取差集
+            $time_collection = $time_collection->filter(function($time){
+                return $time > date('H:i');
+            });
             $doctor_free_datas[$doctor->user->name] = ['times' => array_values($time_collection->toArray())];
         }
         return $doctor_free_datas;
