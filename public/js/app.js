@@ -2164,20 +2164,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2192,7 +2178,7 @@ __webpack_require__.r(__webpack_exports__);
     maxDate.setDate(minDate.getDate());
     return {
       clinic: {
-        id: 1,
+        id: "1",
         name: "",
         address: "",
         introduction: "",
@@ -2210,7 +2196,7 @@ __webpack_require__.r(__webpack_exports__);
       value: "",
       formatted_date: "",
       selected_date: "2021-5-22",
-      selected_day: "1",
+      selected_day: "",
       selected_time: "",
       customer_name: "",
       customer_phone_number: "",
@@ -2268,7 +2254,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submitBooking: function submitBooking() {
       console.log("預約成功");
-      var service_type = '';
+      var service_type = "";
       var vm = this;
       this.service_type_selected.forEach(function (element) {
         service_type += "".concat(element, " ");
@@ -2276,8 +2262,9 @@ __webpack_require__.r(__webpack_exports__);
       service_type = service_type.substr(0, service_type.length - 1); //送出預約api
 
       var data = {
+        clinic_id: this.clinic.id,
         customer_name: this.customer_name,
-        phone: this.customer_name,
+        phone: this.customer_phone_number,
         pet_name: this.pet_name,
         pet_variety: this.pet_variety,
         pet_gender: this.pet_gender,
@@ -2285,8 +2272,7 @@ __webpack_require__.r(__webpack_exports__);
         serve_type: service_type,
         note: this.pet_note,
         date: "".concat(this.selected_date, " ").concat(this.selected_time),
-        doctor_id: "1",
-        clinic_id: this.clinic.id
+        doctor_id: "1"
       }; //預約
 
       console.log(data);
@@ -2297,15 +2283,20 @@ __webpack_require__.r(__webpack_exports__);
       // formatted_date:"2021/5/15"
       // 選定日期後 打 http://127.0.0.1:8000/api/clinic/doctor?clinic_id=1&date=2021-05-10&day=1
       // this.servable_time = response.times;
-      var vm = this; //取得當日空閑時間
+      this.selected_day = this.formatted_date.getDay();
+      if (this.selected_day == 0) this.selected_day = 7;
+      var vm = this;
+      var servable_doctor = [];
+      var servable_time = []; //取得當日空閑時間
 
       _httpAPI_js__WEBPACK_IMPORTED_MODULE_0__.default.getServableTime(this.clinic.id, this.selected_date, this.selected_day).then(function (response) {
         for (var object in response.data) {
-          //var doctor_servable = Object.assign({},{'doctor_name':object},{'servable_time':response.data[object]})
-          vm.servable_doctor.push(object);
-          vm.servable_time.push(response.data[object].times);
+          servable_doctor.push(object);
+          servable_time.push(response.data[object].times);
         }
       });
+      vm.servable_doctor = servable_doctor;
+      vm.servable_time = servable_time;
     },
     dateDisabled: function dateDisabled(ymd, date) {
       // Disable weekends (Sunday = `0`, Saturday = `6`) and
@@ -2317,7 +2308,7 @@ __webpack_require__.r(__webpack_exports__);
       var day = date.getDate();
 
       for (var i = 0; i < this.clinic.serve_times.length; i++) {
-        if (weekday == this.clinic.serve_times[i].day) return false; // 代表15號跟20號可以按
+        if (weekday == this.clinic.serve_times[i].day % 7) return false; // 代表15號跟20號可以按
       } // Return `true` if the date should be disabled
 
 
@@ -2329,7 +2320,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     onContext: function onContext(ctx) {
       // The date formatted in the locale, or the `label-no-date-selected` string
-      this.formatted_date = ctx.selectedFormatted; // The following will be an empty string until a valid date is entered
+      this.formatted_date = ctx.activeDate; // The following will be an empty string until a valid date is entered
 
       this.selected_date = ctx.selectedYMD;
     }
@@ -2352,6 +2343,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _httpAPI_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../httpAPI.js */ "./resources/js/httpAPI.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+//
+//
+//
 //
 //
 //
@@ -2522,22 +2516,33 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   mounted: function mounted() {
     var now = new Date();
     var month = now.getMonth() + 1;
+    var date = now.getDate();
     console.log(_typeof(month));
 
     if (month < 10) {
       month = "0".concat(month);
     }
 
-    var today = "".concat(now.getFullYear(), "-").concat(month, "-").concat(now.getDate());
+    if (date < 10) {
+      date = "0".concat(date);
+    }
+
+    var today = "".concat(now.getFullYear(), "-").concat(month, "-").concat(date);
     this.getReservation(today);
+    this.getDiagnosisInfo(today);
   },
   methods: {
     getReservation: function getReservation(today) {
       var vm = this;
-      _httpAPI_js__WEBPACK_IMPORTED_MODULE_0__.default.getReservation(this.clinic_id, today).then(function (response) {
+      _httpAPI_js__WEBPACK_IMPORTED_MODULE_0__.default.getReservation(this.clinic_id, today).then(function (response) {//Edge TODO
+        //vm.reservation = response.data;
+      });
+    },
+    getDiagnosisInfo: function getDiagnosisInfo(today) {
+      var vm = this;
+      _httpAPI_js__WEBPACK_IMPORTED_MODULE_0__.default.getDiagnosisInfo(this.clinic_id, today).then(function (response) {
         console.log(response.data);
-        console.log(vm.reservation);
-        vm.reservation = response.data;
+        vm.doctor_diagnosis_list = response.data;
       });
     }
   }
@@ -2716,7 +2721,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  api_token: 'api_token=',
+  api_token: 'Qf9qIAyWR761DD0MsWwNDSVKjBdMIvQp22qyD0oWfBjFznKKMrv7NCd5SYC7i71E',
   BASE_API_URL: 'http://127.0.0.1:8000/api',
   // BASE_URL: 'http://127.0.0.1:8000',
   // activateAPIToken: async function () {
@@ -2735,12 +2740,19 @@ __webpack_require__.r(__webpack_exports__);
   addReservation: function addReservation(data) {
     axios({
       method: 'post',
-      url: this.BASE_API_URL + '/reservation',
+      url: this.BASE_API_URL + '/reservation/create',
+      headers: {
+        Authorization: "Bearer ".concat(this.api_token)
+      },
       data: data
     });
   },
   getReservation: function getReservation(clinic_id, date) {
     var url = "".concat(this.BASE_API_URL, "/reservation?clinic_id=").concat(clinic_id, "&date=").concat(date);
+    return axios.get(url);
+  },
+  getDiagnosisInfo: function getDiagnosisInfo(clinic_id, date) {
+    var url = "".concat(this.BASE_API_URL, "/diagnosis/info?clinic_id=").concat(clinic_id, "&date=").concat(date);
     return axios.get(url);
   }
 });
@@ -51875,7 +51887,7 @@ var render = function() {
                   "data-target": "#exampleModal"
                 }
               },
-              [_vm._v("\n                    確認預約\n                ")]
+              [_vm._v("\n          確認預約\n        ")]
             ),
             _vm._v(" "),
             _c(
@@ -51900,12 +51912,12 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
                         _vm._v(
-                          "\n                                您的預約日期為" +
+                          "\n                您的預約日期為" +
                             _vm._s("   ") +
                             _vm._s(_vm.selected_date) +
                             _vm._s("   ") +
                             _vm._s(_vm.selected_time) +
-                            "\n                            "
+                            "\n              "
                         )
                       ]),
                       _vm._v(" "),
@@ -51918,7 +51930,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                                    Close\n                                "
+                              "\n                  Close\n                "
                             )
                           ]
                         ),
@@ -51932,7 +51944,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                                    確認預約\n                                "
+                              "\n                  確認預約\n                "
                             )
                           ]
                         )
@@ -52030,7 +52042,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "leftblock col-3 p-0" }, [
       _c("label", { staticClass: "normal_text", attrs: { for: "pet-age" } }),
-      _vm._v("年齡\n                ")
+      _vm._v("年齡\n        ")
     ])
   },
   function() {
@@ -52039,7 +52051,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "leftblock col-3 p-0" }, [
       _c("label", { staticClass: "normal_text", attrs: { for: "pet-weight" } }),
-      _vm._v("體重\n                ")
+      _vm._v("體重\n        ")
     ])
   },
   function() {
@@ -52061,7 +52073,7 @@ var staticRenderFns = [
         staticClass: "normal_text",
         attrs: { for: "pet-reminder" }
       }),
-      _vm._v("備註\n                ")
+      _vm._v("備註\n        ")
     ])
   },
   function() {
@@ -52080,11 +52092,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [
-          _vm._v(
-            "\n                                    確認預約\n                                "
-          )
-        ]
+        [_vm._v("確認預約")]
       ),
       _vm._v(" "),
       _c(
@@ -52195,11 +52203,9 @@ var render = function() {
                         _vm._v(_vm._s(item.phone))
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        { staticClass: "record_content_s p-0 m-0" },
-                        [_vm._v("紀錄")]
-                      )
+                      _vm._m(2, true),
+                      _vm._v(" "),
+                      _vm._m(3, true)
                     ]
                   )
                 })
@@ -52276,9 +52282,9 @@ var render = function() {
                     "div",
                     { staticClass: "ml-3 my-3 onlooking_list" },
                     [
-                      _vm._m(2),
+                      _vm._m(4),
                       _vm._v(" "),
-                      _vm._m(3),
+                      _vm._m(5),
                       _vm._v(" "),
                       _vm._l(_vm.looking_list, function(object, index) {
                         return _c(
@@ -52288,17 +52294,15 @@ var render = function() {
                             staticClass: "row record_col text-center"
                           },
                           [
-                            _c("div", { staticClass: "col-3 p-0" }, [
+                            _c("div", { staticClass: "col-4 p-0" }, [
                               _vm._v(_vm._s(object.doctor))
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-3 p-0" }, [
+                            _c("div", { staticClass: "col-4 p-0" }, [
                               _vm._v(_vm._s(object.doctor))
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-3 p-0" }, [
-                              _vm._v("room" + _vm._s(index))
-                            ])
+                            _vm._m(6, true)
                           ]
                         )
                       })
@@ -52371,7 +52375,27 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "title_colname_s title_text" }, [
         _vm._v("過往紀錄")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "title_colname_s title_text" }, [
+        _vm._v("進入診間")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "record_content_s " }, [
+      _c("button", [_vm._v("紀錄")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "record_content_s " }, [
+      _c("button", [_vm._v("開始看診")])
     ])
   },
   function() {
@@ -52387,13 +52411,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row item_title text-center" }, [
-      _c("div", { staticClass: "col-3 title_text" }, [_vm._v("醫生")]),
+      _c("div", { staticClass: "col-4 title_text" }, [_vm._v("醫生")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-3 title_text" }, [_vm._v("飼主")]),
+      _c("div", { staticClass: "col-4 title_text" }, [_vm._v("飼主")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-3 title_text" }, [_vm._v("診室")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-3 title_text" }, [_vm._v("離開")])
+      _c("div", { staticClass: "col-4 title_text" }, [_vm._v("離開")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4 p-0" }, [
+      _c("button", [_vm._v("看診結束")])
     ])
   }
 ]
