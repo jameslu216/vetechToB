@@ -15,11 +15,12 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('account')->unique();
+            $table->string('email')->unique();
+            // TODO change password to hex string(blob) store representation
             $table->string('password');
             $table->string('name');
             $table->string('phone');
-            $table->string('email')->unique();
+            $table->string('api_token')->nullable();
         });
     }
 

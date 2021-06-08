@@ -24,7 +24,7 @@ class PetFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'varity' => 'dog',
+            'variety' => 'dog',
             'age' => rand(0, 15),
             'gender' => 'male',
         ];
