@@ -10,6 +10,10 @@ if (window.Vue) {
 import Dashboard from './components/Dashboard.vue';
 import Home from './components/Home.vue';
 import CustomerBooking from './components/CustomerBooking.vue';
+import Login from './components/Login.vue';
+import Register from './components/Register.vue';
+
+
 import Notfound from './components/Notfound.vue';
 
 //-------------------------------------------------------------------
@@ -27,6 +31,14 @@ const routerSetting = {
                     }, {
                         path: '/booking',
                         component: CustomerBooking,
+                    },
+                    {
+                        path: '/login',
+                        component: Login,
+                    },
+                    {
+                        path: '/register',
+                        component: Register,
                     },
 
                 ],

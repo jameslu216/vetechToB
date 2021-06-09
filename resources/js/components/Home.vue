@@ -18,7 +18,9 @@
                     <router-link to="/">Home</router-link>
                     <router-link to="/booking">顧客預約</router-link>
                     <router-link to="/dashboard">醫院儀表板</router-link>
-                    <router-link to="/sign">登入/註冊</router-link>
+                    <router-link to="/login">登入</router-link>
+                    <router-link to="/register">註冊</router-link>
+
                 </div>
             </div>
         </div>
@@ -26,12 +28,9 @@
     </div>
 </template>
 <script>
-import CustomerBooking from "./CustomerBooking.vue";
 
 export default {
-    components: {
-        CustomerBooking
-    }
+   
 };
 </script>
 >
