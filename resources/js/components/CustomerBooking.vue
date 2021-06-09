@@ -421,8 +421,8 @@ export default {
       // formatted_date:"2021/5/15"
       // 選定日期後 打 http://127.0.0.1:8000/api/clinic/doctor?clinic_id=1&date=2021-05-10&day=1
       // this.servable_time = response.times;
-      console.log("111");
       this.selected_day = this.formatted_date.getDay();
+      if(this.selected_day==0) this.selected_day=7
       let vm = this;
       const servable_doctor = [];
       const servable_time = [];
@@ -446,7 +446,7 @@ export default {
       const weekday = date.getDay();
       const day = date.getDate();
       for (var i = 0; i < this.clinic.serve_times.length; i++) {
-        if (weekday == this.clinic.serve_times[i].day) return false; // 代表15號跟20號可以按
+        if (weekday == this.clinic.serve_times[i].day%7) return false; // 代表15號跟20號可以按
       }
       // Return `true` if the date should be disabled
       return true;

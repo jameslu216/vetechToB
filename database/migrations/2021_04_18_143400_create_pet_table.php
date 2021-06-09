@@ -16,7 +16,7 @@ class CreatePetTable extends Migration
         Schema::create('pet', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('varity'); //品種
+            $table->string('variety'); //品種
             $table->integer('age')->unsigned();
             $table->string('gender');
             $table->integer('customer_id')->unsigned();

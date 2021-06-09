@@ -1,5 +1,5 @@
 export default {
-    api_token: 'api_token=',
+    api_token: 'Qf9qIAyWR761DD0MsWwNDSVKjBdMIvQp22qyD0oWfBjFznKKMrv7NCd5SYC7i71E',
     BASE_API_URL: 'http://127.0.0.1:8000/api',
     // BASE_URL: 'http://127.0.0.1:8000',
     // activateAPIToken: async function () {
@@ -19,6 +19,7 @@ export default {
         axios({
             method: 'post',
             url: this.BASE_API_URL + '/reservation/create',
+            headers: { Authorization: `Bearer ${this.api_token}` },
             data: data
         });
     },
@@ -26,7 +27,7 @@ export default {
         let url = `${this.BASE_API_URL}/reservation?clinic_id=${clinic_id}&date=${date}`;
         return axios.get(url);
     },
-    getReservation: function (clinic_id,date) {
+    getDiagnosisInfo: function (clinic_id,date) {
         let url = `${this.BASE_API_URL}/diagnosis/info?clinic_id=${clinic_id}&date=${date}`;
         return axios.get(url);
     },

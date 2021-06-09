@@ -12,6 +12,7 @@ class Pet extends Model
 
     protected $table = 'Pet';
     public $timestamps = false;
+    protected $fillable = ['name', 'variety', 'age', 'gender'];
 
     public function customer()
     {

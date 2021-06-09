@@ -176,11 +176,15 @@ export default {
   mounted() {
     const now = new Date();
     let month = now.getMonth() + 1;
+    let date = now.getDate()
     console.log(typeof month);
     if (month < 10) {
       month = `0${month}`;
     }
-    const today = `${now.getFullYear()}-${month}-${now.getDate()}`;
+    if (date < 10) {
+      date = `0${date}`;
+    }
+    const today = `${now.getFullYear()}-${month}-${date}`;
     this.getReservation(today);
     this.getDiagnosisInfo(today);
   },
@@ -188,14 +192,15 @@ export default {
     getReservation(today) {
       const vm = this;
       httpAPI.getReservation(this.clinic_id, today).then(function (response) {
-        console.log(response.data)
-        console.log(vm.reservation)
-        vm.reservation = response.data;
+        //Edge TODO
+        //vm.reservation = response.data;
       });
     },
     getDiagnosisInfo(today) {
       const vm = this;
-      httpAPI.getReservation(this.clinic_id, today).then(function (response) {
+      httpAPI.getDiagnosisInfo(this.clinic_id, today).then(function (response) {
+        console.log(response.data)
+
         vm.doctor_diagnosis_list = response.data;
       });
     },

@@ -20,7 +20,7 @@ class Doctor extends User
 
     public function name()
     {
-        return $this->user()->name;
+        return $this->user()->first()->name;
     }
 
     public function diagnosisInfos()
