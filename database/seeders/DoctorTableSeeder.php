@@ -30,7 +30,7 @@ class DoctorTableSeeder extends Seeder
                 $DiagnosisTime = DiagnosisTime::factory()->count(1)->make()[0];
                 $DiagnosisTime->day = $i;
                 $DiagnosisTime->start_at = '13:30';
-                $DiagnosisTime->end_at = '20:00';
+                $DiagnosisTime->end_at = '21:30';
                 $doctor->diagnosisTimes()->save($DiagnosisTime);
             }
             $doctor->diagnosisInfos()->save(DiagnosisInfo::factory()->count(1)->make()[0]);
