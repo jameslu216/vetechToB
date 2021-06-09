@@ -37,12 +37,9 @@ class ClinicService
         $doctor_datas = $this->ClinicRepository->getDoctorDataByClinic($clinic_id);
         $doctor_free_datas = [];
         foreach ($doctor_datas as $doctor) {
-            $diagnosis_times = $doctor->diagnosisTimes->groupBy('day')->map(function ($diagnosis_times) {
-                return $diagnosis_times->keyBy('time_zone');
-            });
+            $diagnosis_times = $doctor->diagnosisTimes->where('day', $day);
             $time_collection = collect([]);
-            $diagnosis_times[$day] = empty($diagnosis_times[$day]) ? collect() : $diagnosis_times[$day];
-            foreach($diagnosis_times[$day] as $diagnosis_time){
+            foreach($diagnosis_times as $diagnosis_time){
                 $time_collection = $time_collection->merge($this->getTimeCollectonByStartAndEnd($diagnosis_time->start_at, $diagnosis_time->end_at));
             }
             $reservation = $this->ReservationRepository->getReservationByClinicIdAndDate($clinic_id, $date)->groupBy('doctor_id');

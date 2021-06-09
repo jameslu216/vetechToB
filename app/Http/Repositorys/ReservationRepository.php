@@ -37,7 +37,7 @@ class ReservationRepository
             [
                 'id' => $reservation_id,
                 'clinic_id' => $reservation_data['clinic_id'],
-                'customer_name' => $customer_name,
+                // 'customer_name' => $customer_name,
                 'customer_id' => $customer->id,
                 'pet_name' => $reservation_data['pet_name'],
                 'datetime' => $reservation_data['date'],
@@ -57,6 +57,20 @@ class ReservationRepository
         $reservation->doctor_id = $reservation_data['doctor_id'];
         $reservation->clinic_id = $reservation_data['clinic_id'];
         $reservation->save();
+    }
+
+    /**
+     * 取得指定預約
+     * @param  Int $clinic_id [診所id]
+     * @param  Int $datetime  [預約時間]
+     * @return Object  $reservation    [預約資料]
+     */
+    public function getReservationByClinicIdAndDatetime($clinic_id, $datetime)
+    {
+        $reservation = Reservation::where('clinic_id', '=', $clinic_id)
+                                    ->where('datetime', '=', $datetime)
+                                    ->first();
+        return $reservation;
     }
 
     /**
