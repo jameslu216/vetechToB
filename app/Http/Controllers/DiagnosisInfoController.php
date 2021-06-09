@@ -31,8 +31,7 @@ class DiagnosisInfoController extends BaseController
         $date = date($request->date);
         if (
             empty($clinic_id) ||
-            empty($date) || 
-            $date > date("Y-m-d H:i")
+            empty($date)
         ) {
             return response('error', 400);
         }

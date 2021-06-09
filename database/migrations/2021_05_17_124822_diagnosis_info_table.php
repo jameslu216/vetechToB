@@ -16,7 +16,7 @@ class DiagnosisInfoTable extends Migration
         Schema::create('diagnosis_info', function (Blueprint $table) {
             $table->integer('doctor_id')->unsigned();
             $table->datetime('datetime');
-            $table->string('service_type');
+            $table->string('serve_type');
             $table->primary(['doctor_id', 'datetime']);
         });
     }

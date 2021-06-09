@@ -12,6 +12,8 @@ class DiagnosisInfo extends Model
     protected $table = 'diagnosis_info';
     public $timestamps = false;
 
+    protected $fillable = ['datetime', 'doctor_id'];
+
     public function doctor()
     {
         return $this->belongsTo('App\Models\Doctor', 'doctor_id', 'id');

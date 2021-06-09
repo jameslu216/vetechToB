@@ -25,7 +25,7 @@ class DiagnosisInfoFactory extends Factory
         return [
             'doctor_id' => $this->faker->numberBetween(1, Doctor::count()),
             'datetime' => $this->faker->dateTime(),
-            'service_type' => '一般門診',
+            'serve_type' => '一般門診',
         ];
     }
 }

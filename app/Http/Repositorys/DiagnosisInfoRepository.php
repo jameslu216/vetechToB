@@ -10,6 +10,27 @@ use \Datetime;
 
 class DiagnosisInfoRepository
 {
+
+    /**
+     * 新增看診時間
+     * @param  Array $diagnosis_info_data     [看診時間資訊]
+     * @return Bool  [是否新增成功]
+     */
+    public function createDiagnosisInfo(&$diagnosis_info_data)
+    {
+        $diagnosis_info = DiagnosisInfo::firstOrNew(
+            [
+                'doctor_id' => $diagnosis_info_data['doctor_id'],
+                'datetime' => $diagnosis_info_data['date'],
+            ]
+        );
+        $diagnosis_info->doctor_id = $diagnosis_info_data['doctor_id'];
+        $diagnosis_info->datetime = $diagnosis_info_data['date'];
+        $diagnosis_info->serve_type = $diagnosis_info_data['serve_type'];
+        $diagnosis_info->save();
+        return true;
+    }
+
     /**
      * 查詢看診資訊
      * @param  Int $clinic_id [診所id]

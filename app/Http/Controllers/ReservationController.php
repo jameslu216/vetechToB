@@ -9,15 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Services\ReservationService;
+use App\Http\Services\DiagnosisInfoService;
 
 class ReservationController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function __construct(
-        ReservationService $ReservationService
+        ReservationService $ReservationService,
+        DiagnosisInfoService $DiagnosisInfoService
     ) {
         $this->ReservationService = $ReservationService;
+        $this->DiagnosisInfoService = $DiagnosisInfoService;
     }
 
     /**
@@ -40,6 +43,7 @@ class ReservationController extends BaseController
         if(!$is_success){
             return response('該時段已有人預約', 400);
         }
+        $diagnosis_info_create_success = $this->DiagnosisInfoService->createDiagnosisInfo($reservation_data);
         return response()->json($reservation_data, 200);
     }
 
