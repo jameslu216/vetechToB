@@ -23,7 +23,7 @@ class DiagnosisTimeFactory extends Factory
     {
         return [
             'day' => 1,
-            'time_zone' => rand(0,2),
+            // 'time_zone' => rand(0,2),
             'start_at' => '09:00',
             'end_at' => '12:30',
         ];

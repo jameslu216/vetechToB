@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
     {
         $count = 0;
         User::factory()->count(5)->create()->each(function ($user) {
-            $user->doctors()->create()->diagnosisTimes()->save(DiagnosisTime::factory()->count(1)->make()[0]);
+            $user->doctors()->create();
             $user->customers()->create()->pets()->save(Pet::factory()->count(1)->make()[0]);
         });
     }
