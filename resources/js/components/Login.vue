@@ -44,23 +44,22 @@ export default {
       password: "",
     };
   },
-  computed:{
-    hasLogin(){
+  computed: {
+    hasLogin() {
       return this.$store.state.login.hasLogin;
-    }
+    },
   },
-  mounted(){
-
+  mounted() {
   },
   methods: {
     login() {
-      const vm=this
+      const vm = this;
       let loginRequirements = {
         email: this.email,
         password: this.password,
       };
       httpAPI.userLogin(loginRequirements).then(function (response) {
-          console.log('222',response);
+        console.log("222", response);
 
         try {
           vm.$store.commit("SET_HAS_LOGIN", true);
