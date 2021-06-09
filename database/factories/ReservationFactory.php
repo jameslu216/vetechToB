@@ -27,7 +27,7 @@ class ReservationFactory extends Factory
     public function definition()
     {
         if (Reservation::count() == 0) {
-            $latest_reservation = DateTime::createFromFormat('Y-m-d H:i:s', '2021-05-28 22:11:33');
+            $latest_reservation = DateTime::createFromFormat('Y-m-d H:i', '2021-05-28 22:11');
         } else {
             $latest_reservation = DateTime::createFromFormat('Y-m-d H:i:s', Reservation::latest('datetime')->first()->datetime); 
             $latest_reservation->modify('+ 1 hour');

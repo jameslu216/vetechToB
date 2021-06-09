@@ -56,7 +56,9 @@ class ReservationController extends BaseController
             return response('error', 400);
         }
         $reservation_data = $this->ReservationService->getReservationData($clinic_id, $date);
-        return response()->json($reservation_data, 200);
+        $return_data = [];
+        $return_data["reservation_list"] = $reservation_data;
+        return response()->json($return_data, 200);
     }
  
 

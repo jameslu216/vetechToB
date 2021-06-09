@@ -103,13 +103,13 @@ class ReservationRepository
                                     ->whereDate('datetime', '=', $date)
                                     ->get()->each(function(&$reservation) {
                     $doctor = Doctor::where('id', '=', $reservation['doctor_id'])->first();
-                    echo $doctor;
                     $reservation['doctor_name'] = $doctor->name();
-                    $datetime = Datetime::createFromFormat('Y-m-d H:i', $reservation['datetime']);
+                    $datetime = Datetime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i',strtotime($reservation['datetime'])));
                     $reservation['date'] = $datetime->format('Y-m-d');
                     $reservation['time'] = $datetime->format('H:i');
+                    $reservation['reservation_id'] = strval($reservation['id']);
                 }
-                )->makeHidden(['doctor_id', 'datetime']);
+                )->makeHidden(['doctor_id', 'datetime', 'id']);
         return $reservations;
     }
 
