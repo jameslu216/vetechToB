@@ -36,7 +36,10 @@ class ReservationController extends BaseController
         ) {
             return response('error', 400);
         }
-        $this->ReservationService->createReservation($reservation_data);
+        $is_success = $this->ReservationService->createReservation($reservation_data);
+        if(!$is_success){
+            return response('該時段已有人預約', 400);
+        }
         return response()->json($reservation_data, 200);
     }
 

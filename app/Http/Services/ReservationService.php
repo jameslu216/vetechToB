@@ -8,17 +8,38 @@ class ReservationService
 {
     public function __construct(
         ReservationRepository $ReservationRepository
-    )
-    {
+    ) {
         $this->ReservationRepository = $ReservationRepository;
     }
     /**
      * 新增預約
      * @param  Array $reservation_data     [預約資訊]
+     * @return Bool  [是否預約成功]
      */
     public function createReservation(&$reservation_data)
     {
-        $this->ReservationRepository->createReservation($reservation_data);
+        $available = $this->checkReservationAvailable($reservation_data['clinic_id'], $reservation_data['date']);
+        if($available){
+            $this->ReservationRepository->createReservation($reservation_data);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 確認預約
+     * @param  Array $reservation_data  [預約資訊]
+     * @return Bool  [是否可以預約資料]
+     */
+    private function checkReservationAvailable($clinic_id, $datetime)
+    {
+        $reservation = $this->ReservationRepository->getReservationByClinicIdAndDatetime($clinic_id, $datetime);
+        if (empty($reservation)) {
+            return true; //代表可以預約
+        } else {
+            return false;
+        }
     }
 
     /**
