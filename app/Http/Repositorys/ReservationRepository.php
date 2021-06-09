@@ -6,6 +6,8 @@ use App\Models\Reservation;
 use App\Models\Doctor;
 use \Datetime;
 
+use Illuminate\Support\Facades\Auth;
+
 class ReservationRepository
 {
     /**
@@ -27,20 +29,24 @@ class ReservationRepository
     {
         $reservation_id = Reservation::where('clinic_id', '=', $reservation_data['clinic_id'])->max('id') + 1;
 
+        $user = Auth::user();
+        $customer = $user->customers()->first();
+        $customer_name = $customer->name();
+
         $reservation = Reservation::firstOrNew(
             [
                 'id' => $reservation_id,
                 'clinic_id' => $reservation_data['clinic_id'],
-                'customer_name' => $reservation_data['customer_name'],
-                'customer_id' => 1, //之後有登入要回來補
+                'customer_name' => $customer_name,
+                'customer_id' => $customer->id,
                 'pet_name' => $reservation_data['pet_name'],
                 'datetime' => $reservation_data['date'],
             ]
         );
         $reservation->id = $reservation_id;
-        $reservation->customer_name = $reservation_data['customer_name'];
-        $reservation->customer_id = 1;
-        $reservation->phone = $reservation_data['phone'];
+        $reservation->customer_name = $customer_name;
+        $reservation->customer_id = $customer->id;
+        $reservation->phone = $user->phone;
         $reservation->pet_name = $reservation_data['pet_name'];
         $reservation->pet_variety = $reservation_data['pet_variety'];
         $reservation->pet_gender = $reservation_data['pet_gender'];

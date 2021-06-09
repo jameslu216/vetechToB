@@ -30,10 +30,8 @@ class ReservationController extends BaseController
         $reservation_data = $request->all();
         $reservation_data['date'] = date($reservation_data['date']);
         if (
-            empty($reservation_data['customer_name']) ||
             empty($reservation_data['clinic_id']) ||
             empty($reservation_data['date']) ||
-            empty($reservation_data['phone']) ||
             $reservation_data['date'] < date("Y-m-d H:i")
         ) {
             return response('error', 400);

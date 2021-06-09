@@ -24,7 +24,7 @@ class DiagnosisInfoRepository
             // Append doctor data to doctors
             $doctors_data[] = [
                 'doctor_id' => $doctor->id,
-                'doctor_name' => $doctor->user()->name,
+                'doctor_name' => $doctor->name(),
                 'diagnosis_time_list' => $doctor->diagnosisInfos()->whereDate('datetime', '=', $date)->get()->each(function(&$diagnosis_info) {
                     $diagnosis_time = Datetime::createFromFormat('Y-m-d H:i:s', $diagnosis_info['datetime']);
                     $diagnosis_info['diagnosis_time'] = $diagnosis_time->format('H:i');
