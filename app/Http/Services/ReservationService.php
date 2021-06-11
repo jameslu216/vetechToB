@@ -79,4 +79,15 @@ class ReservationService
     {
         $this->ReservationRepository->modifyReservation($modify_reservation_data);
     }
+
+    
+    /**
+     * 查詢看診資訊
+     * @param  Int $clinic_id [診所id]    
+     * @param  Int $date [日期]    
+     */
+    public function getReservationInfoByDate($clinic_id, $date)
+    {
+        return $this->ReservationRepository->getReservationInfoByDate($clinic_id, $date);
+    }
 }

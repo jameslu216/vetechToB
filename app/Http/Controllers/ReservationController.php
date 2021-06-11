@@ -9,18 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Services\ReservationService;
-use App\Http\Services\DiagnosisInfoService;
 
 class ReservationController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function __construct(
-        ReservationService $ReservationService,
-        DiagnosisInfoService $DiagnosisInfoService
+        ReservationService $ReservationService
     ) {
         $this->ReservationService = $ReservationService;
-        $this->DiagnosisInfoService = $DiagnosisInfoService;
     }
 
     /**
@@ -43,7 +40,6 @@ class ReservationController extends BaseController
         if(!$is_success){
             return response('該時段已有人預約', 400);
         }
-        $diagnosis_info_create_success = $this->DiagnosisInfoService->createDiagnosisInfo($reservation_data);
         return response()->json($reservation_data, 200);
     }
 
@@ -108,5 +104,24 @@ class ReservationController extends BaseController
         }
         $this->ReservationService->modifyReservation($modify_reservation_data);
         return response()->json($modify_reservation_data, 200);
+    }
+
+    /**
+     * 查詢看診資訊
+     * @param  Request $request     [description]
+     * @return Json  $reservation_info_data    [轉移預約資料]
+     */
+    public function getReservationInfo(Request $request)
+    {
+        $clinic_id = $request->clinic_id;
+        $date = date($request->date);
+        if (
+            empty($clinic_id) ||
+            empty($date)
+        ) {
+            return response('error', 400);
+        }
+        $reservation_info_data = $this->ReservationService->getReservationInfoByDate($clinic_id, $date);
+        return response()->json($reservation_info_data, 200);            
     }
 }

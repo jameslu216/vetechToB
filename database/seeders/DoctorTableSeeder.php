@@ -33,7 +33,6 @@ class DoctorTableSeeder extends Seeder
                 $DiagnosisTime->end_at = '21:30';
                 $doctor->diagnosisTimes()->save($DiagnosisTime);
             }
-            $doctor->diagnosisInfos()->save(DiagnosisInfo::factory()->count(1)->make()[0]);
             $doctor->reservations()->save(Reservation::factory()->count(1)->make()[0]);
             ++$count;
         });
