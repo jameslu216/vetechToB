@@ -9,7 +9,6 @@
               <span>Upcoming Book</span>
             </div>
             <div class="row item_title">
-              <div class="title_colname_s title_text">ID</div>
               <div class="title_colname_s title_text">日期</div>
               <div class="title_colname_s title_text">時間</div>
               <div class="title_colname_s title_text">寵物姓名</div>
@@ -19,16 +18,14 @@
               <div class="title_colname_s title_text">治療項目</div>
               <div class="title_colname_m title_text">診前備註</div>
               <div class="title_colname_m title_text">電話號碼</div>
-              <div class="title_colname_s title_text">過往紀錄</div>
-              <div class="title_colname_s title_text">進入診間</div>
-
+              <div class="title_colname_m title_text">過往紀錄</div>
+              <div class="title_colname_m title_text">進入診間</div>
             </div>
             <div
               v-for="(item, index) in reservation"
               class="row py-3 mt-2 mb-2 record_col"
               :key="index"
             >
-              <div class="record_content_s">{{ item.id }}</div>
               <div class="record_content_s">{{ item.date }}</div>
               <div class="record_content_s">{{ item.time }}</div>
               <div class="record_content_s">{{ item.pet_name }}</div>
@@ -38,9 +35,10 @@
               <div class="record_content_s">{{ item.serve_type }}</div>
               <div class="record_content_m">{{ item.note }}</div>
               <div class="record_content_m">{{ item.phone }}</div>
-              <div class="record_content_s "><button>紀錄</button></div>
-              <div class="record_content_s "><button>開始看診</button></div>
-
+              <div class="record_content_m"><button>紀錄</button></div>
+              <div class="record_content_m">
+                <button v-on:click="startDiagnosis(index)">開始看診</button>
+              </div>
             </div>
           </div>
         </div>
@@ -92,11 +90,37 @@
                     :key="index"
                   >
                     <div class="col-4 p-0">{{ object.doctor }}</div>
-                    <div class="col-4 p-0">{{ object.doctor }}</div>
-                    <div class="col-4 p-0"><button>看診結束</button></div>
+                    <div class="col-4 p-0">{{ object.customer_name }}</div>
+                    <div class="col-4 p-0">
+                      <b-button
+                        @click="
+                          modalShow = !modalShow;
+                          exit_id = index;
+                        "
+                        >完成看診</b-button
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
+              <b-modal title="請填寫診後備注" v-model="modalShow">
+                <textarea class="w-100" v-model="note"></textarea>
+                <template #modal-footer="{ ok, cancel }">
+                  <b-button size="sm" variant="danger" @click="cancel()">
+                    取消
+                  </b-button>
+                  <b-button
+                    size="sm"
+                    variant="success"
+                    @click="
+                      exitDiagnosis();
+                      modalShow = !modalShow;
+                    "
+                  >
+                    儲存紀錄
+                  </b-button>
+                </template>
+              </b-modal>
             </div>
           </div>
         </div>
@@ -157,26 +181,16 @@ export default {
           phone: "0912345678",
         },
       ],
-      looking_list: [
-        {
-          doctor: "Dr. Chen",
-          customer: "蒸魚好",
-        },
-        {
-          doctor: "Dr. Wang",
-          customer: "旅行號",
-        },
-        {
-          doctor: "Dr. Liao",
-          customer: "朱凱凱",
-        },
-      ],
+      modalShow: false,
+      looking_list: [],
+      note: "",
+      exit_id: "",
     };
   },
   mounted() {
     const now = new Date();
     let month = now.getMonth() + 1;
-    let date = now.getDate()
+    let date = now.getDate();
     console.log(typeof month);
     if (month < 10) {
       month = `0${month}`;
@@ -199,10 +213,28 @@ export default {
     getDiagnosisInfo(today) {
       const vm = this;
       httpAPI.getDiagnosisInfo(this.clinic_id, today).then(function (response) {
-        console.log(response.data)
+        console.log(response.data);
 
         vm.doctor_diagnosis_list = response.data;
       });
+    },
+    startDiagnosis(index) {
+      this.looking_list.push(this.reservation[index]);
+      this.reservation.splice(index, 1);
+    },
+    exitDiagnosis() {
+      this.saveDiagnosisRecord(this.looking_list[this.exit_id]);
+      this.looking_list.splice(this.exit_id, 1);
+
+    },
+    saveDiagnosisRecord(object) {
+      let data = {
+        clinic_id: "1",
+        reservation_id: object.id,
+        "diagosis_note:": this.note,
+      };
+      console.log(data);
+      httpAPI.saveDiagnosisRecord(data).then(function (response) {});
     },
   },
 };
