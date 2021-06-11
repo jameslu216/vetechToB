@@ -7,6 +7,7 @@ use App\Models\Doctor;
 use App\Models\DiagnosisTime;
 use App\Models\DiagnosisInfo;
 use App\Models\Reservation;
+use App\Models\Clinic;
 
 class DoctorTableSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DoctorTableSeeder extends Seeder
     {
         //
         $count = 1;
-        // Doctor::factory()->count(5)->create()->each(function ($doctor) use (&$count){
+        Doctor::factory()->count(5)->create();
         Doctor::all()->each(function ($doctor) use (&$count){
             for($i = 1 ; $i <= 7 ; ++$i){
                 $DiagnosisTime = DiagnosisTime::factory()->count(1)->make()[0];

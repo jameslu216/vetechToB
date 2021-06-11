@@ -21,12 +21,12 @@ class Reservation extends Model
 
     public function doctor()
     {
-        return $this->belongsTo('App\Models\Doctor', 'doctor_id', 'id');
+        return $this->belongsTo('App\Models\Doctor', 'doctor_id', 'user_id');
     }
 
     public function customer()
     {
-        return $this->belongsTo('App\Models\Customer', 'customer_id', 'id');
+        return $this->belongsTo('App\Models\Customer', 'customer_id', 'user_id');
     }
 
 }
