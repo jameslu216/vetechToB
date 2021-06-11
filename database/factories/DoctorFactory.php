@@ -16,6 +16,8 @@ class DoctorFactory extends Factory
      */
     protected $model = Doctor::class;
 
+    private static $order = 1;
+
     /**
      * Define the model's default state.
      *
@@ -24,8 +26,7 @@ class DoctorFactory extends Factory
     public function definition()
     {
         return [
-            // FIXME don't know whether this add foreign key method is valid
-            'user_id' => $this->faker->numberBetween(1, User::count()),
+            'user_id' => self::$order++,
             'clinic_id' => $this->faker->numberBetween(1, Clinic::count())
         ];
     }
