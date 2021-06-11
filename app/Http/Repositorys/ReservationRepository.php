@@ -32,7 +32,9 @@ class ReservationRepository
         $user = Auth::user();
         $customer = $user->customers()->first();
         $customer_name = $customer->name();
-
+        $datetime = Datetime::createFromFormat('Y-m-d', date('Y-m-d',strtotime($reservation_data['date'])));// + " " + $reservation_data['time']
+        $time = Datetime::createFromFormat('H:i', date('H:i',strtotime($reservation_data['time'])));
+        $datetime->setTime($time->format('H'), $time->format('i'), $time->format('s'));
         $reservation = Reservation::firstOrNew(
             [
                 'id' => $reservation_id,
@@ -53,7 +55,7 @@ class ReservationRepository
         $reservation->pet_age = $reservation_data['pet_age'];
         $reservation->serve_type = $reservation_data['serve_type'];
         $reservation->note = $reservation_data['note'];
-        $reservation->datetime = $reservation_data['date'];
+        $reservation->datetime = $datetime;
         $reservation->doctor_id = $reservation_data['doctor_id'];
         $reservation->clinic_id = $reservation_data['clinic_id'];
         $reservation->save();
@@ -109,7 +111,7 @@ class ReservationRepository
                     $reservation['time'] = $datetime->format('H:i');
                     $reservation['reservation_id'] = strval($reservation['id']);
                 }
-                )->makeHidden(['doctor_id', 'datetime', 'id']);
+                )->makeHidden(['doctor_id', 'datetime', 'id', 'clinic_id']);
         return $reservations;
     }
 

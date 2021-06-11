@@ -25,7 +25,10 @@ class DiagnosisInfoRepository
             ]
         );
         $diagnosis_info->doctor_id = $diagnosis_info_data['doctor_id'];
-        $diagnosis_info->datetime = $diagnosis_info_data['date'];
+        $datetime = Datetime::createFromFormat('Y-m-d', date('Y-m-d',strtotime($diagnosis_info_data['date'])));
+        $time = Datetime::createFromFormat('H:i', date('H:i',strtotime($diagnosis_info_data['time'])));
+        $datetime->setTime($time->format('H'), $time->format('i'), $time->format('s'));
+        $diagnosis_info->datetime = $datetime;
         $diagnosis_info->serve_type = $diagnosis_info_data['serve_type'];
         $diagnosis_info->save();
         return true;
