@@ -32,7 +32,7 @@ class DiagnosisRecordFactory extends Factory
             'pet_variety' => "doge",
             'pet_gender' => "male",
             'pet_age' => 2,
-            'serve_type' => "surgery",
+            'service_type' => "surgery",
             'note' => "No note, no",
             'diagnosis_note' => "This is diagnosis note.",
             'datetime' => $this->faker->dateTime(),

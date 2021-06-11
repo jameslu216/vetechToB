@@ -43,7 +43,7 @@ class ReservationFactory extends Factory
             'pet_variety' => "doge",
             'pet_gender' => "male",
             'pet_age' => 2,
-            'serve_type' => "surgery",
+            'service_type' => "surgery",
             'note' => "No note, no",
             'datetime' => $latest_reservation,
             'doctor_id' => $doctor_id,

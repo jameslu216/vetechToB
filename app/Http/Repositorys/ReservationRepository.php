@@ -54,7 +54,7 @@ class ReservationRepository
         $reservation->pet_variety = $reservation_data['pet_variety'];
         $reservation->pet_gender = $reservation_data['pet_gender'];
         $reservation->pet_age = $reservation_data['pet_age'];
-        $reservation->serve_type = $reservation_data['serve_type'];
+        $reservation->service_type = $reservation_data['service_type'];
         $reservation->note = $reservation_data['note'];
         $reservation->datetime = $datetime;
         $reservation->doctor_id = $reservation_data['doctor_id'];

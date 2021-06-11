@@ -32,7 +32,7 @@
               <div class="record_content_s">{{ item.pet_gender }}</div>
               <div class="record_content_s">{{ item.customer_name }}</div>
               <div class="record_content_s">{{ item.doctor }}</div>
-              <div class="record_content_s">{{ item.serve_type }}</div>
+              <div class="record_content_s">{{ item.service_type }}</div>
               <div class="record_content_m">{{ item.note }}</div>
               <div class="record_content_m">{{ item.phone }}</div>
               <div class="record_content_m"><button>紀錄</button></div>
@@ -176,7 +176,7 @@ export default {
           pet_gender: "F(S)",
           customer_name: "陳先生",
           doctor: "Dr.Chen",
-          serve_type: "定期健檢",
+          service_type: "定期健檢",
           note: "發現小型肉塊",
           phone: "0912345678",
         },

@@ -25,7 +25,7 @@ class DiagnosisRecordTable extends Migration
             $table->string('pet_variety')->nullable();
             $table->string('pet_gender')->nullable();
             $table->integer('pet_age')->nullable();
-            $table->string('serve_type')->nullable();
+            $table->string('service_type')->nullable();
             $table->string('note')->nullable();
             $table->string('diagnosis_note')->nullable();
             $table->dateTime('datetime');

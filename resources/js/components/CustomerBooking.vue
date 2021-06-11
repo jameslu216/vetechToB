@@ -407,7 +407,7 @@ export default {
         pet_variety: this.pet_variety,
         pet_gender: this.pet_gender,
         pet_age: this.pet_variety,
-        serve_type: service_type,
+        service_type: service_type,
         note: this.pet_note,
         date: `${this.selected_date} ${this.selected_time}`,
         doctor_id: "1",
