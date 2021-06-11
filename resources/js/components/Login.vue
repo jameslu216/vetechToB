@@ -49,8 +49,7 @@ export default {
       return this.$store.state.login.hasLogin;
     },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     login() {
       const vm = this;
@@ -59,11 +58,10 @@ export default {
         password: this.password,
       };
       httpAPI.userLogin(loginRequirements).then(function (response) {
-        console.log("222", response);
-
-        try {
-          vm.$store.commit("SET_HAS_LOGIN", true);
-        } catch {}
+        if (response === "failed") {
+          alert("帳號密碼輸入錯誤");
+        }
+        vm.$store.commit("SET_HAS_LOGIN", true);
       });
     },
   },
