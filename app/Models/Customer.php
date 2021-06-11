@@ -25,6 +25,6 @@ class Customer extends User
 
     public function pets()
     {
-        return $this->hasMany('App\Models\Pet', 'customer_id', 'id');
+        return $this->hasMany('App\Models\Pet', 'customer_id', 'user_id');
     }
 }

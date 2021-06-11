@@ -25,7 +25,7 @@ class Doctor extends User
 
     public function diagnosisTimes()
     {
-        return $this->hasMany('App\Models\DiagnosisTime', 'doctor_id', 'id');
+        return $this->hasMany('App\Models\DiagnosisTime', 'doctor_id', 'user_id');
     }
 
     public function clinic()
@@ -35,6 +35,6 @@ class Doctor extends User
 
     public function reservations()
     {
-        return $this->hasMany('App\Models\Reservation', 'doctor_id', 'id');
+        return $this->hasMany('App\Models\Reservation', 'doctor_id', 'user_id');
     }
 }
