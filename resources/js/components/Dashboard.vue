@@ -113,8 +113,8 @@
 </template>
 <script>
 import httpAPI from "../httpAPI.js";
-
 export default {
+  name: "Dashboard",
   data() {
     return {
       clinic_id: "1",

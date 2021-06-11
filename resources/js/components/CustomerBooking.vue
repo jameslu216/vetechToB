@@ -319,6 +319,7 @@
 <script>
 import httpAPI from "../httpAPI.js";
 export default {
+  name: "CustomerBooking",
   data() {
     //  下面用來處理日曆的部分
     const now = new Date();
@@ -387,13 +388,12 @@ export default {
       self.clinic = response.data;
     });
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     submitBooking() {
-      console.log("預約成功");
       let service_type = "";
       const vm = this;
-
       this.service_type_selected.forEach((element) => {
         service_type += `${element} `;
       });
@@ -422,7 +422,7 @@ export default {
       // 選定日期後 打 http://127.0.0.1:8000/api/clinic/doctor?clinic_id=1&date=2021-05-10&day=1
       // this.servable_time = response.times;
       this.selected_day = this.formatted_date.getDay();
-      if(this.selected_day==0) this.selected_day=7
+      if (this.selected_day == 0) this.selected_day = 7;
       let vm = this;
       const servable_doctor = [];
       const servable_time = [];
@@ -446,7 +446,7 @@ export default {
       const weekday = date.getDay();
       const day = date.getDate();
       for (var i = 0; i < this.clinic.serve_times.length; i++) {
-        if (weekday == this.clinic.serve_times[i].day%7) return false; // 代表15號跟20號可以按
+        if (weekday == this.clinic.serve_times[i].day % 7) return false; // 代表15號跟20號可以按
       }
       // Return `true` if the date should be disabled
       return true;

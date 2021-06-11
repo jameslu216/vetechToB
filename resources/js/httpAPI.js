@@ -23,12 +23,26 @@ export default {
             data: data
         });
     },
-    getReservation: function (clinic_id,date) {
+    getReservation: function (clinic_id, date) {
         let url = `${this.BASE_API_URL}/reservation?clinic_id=${clinic_id}&date=${date}`;
         return axios.get(url);
     },
-    getDiagnosisInfo: function (clinic_id,date) {
+    getDiagnosisInfo: function (clinic_id, date) {
         let url = `${this.BASE_API_URL}/diagnosis/info?clinic_id=${clinic_id}&date=${date}`;
         return axios.get(url);
+    },
+    userLogin: function (data) {
+        return axios({
+            method: 'post',
+            url: this.BASE_API_URL + '/user/login',
+            data: data
+        }).then((res) => {
+            this.api_token = res.data.api_token
+            return res;
+        }
+        ).catch((res)=>{
+            return res;
+        })
+        ;
     },
 }
