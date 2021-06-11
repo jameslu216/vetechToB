@@ -16,7 +16,7 @@ export default {
         return axios.get(url);
     },
     addReservation: function (data) {
-        axios({
+        return axios({
             method: 'post',
             url: this.BASE_API_URL + '/reservation/create',
             headers: { Authorization: `Bearer ${this.api_token}` },
@@ -44,5 +44,12 @@ export default {
             return res;
         })
         ;
+    },
+    userRegister: function (data) {
+        return axios({
+            method: 'post',
+            url: this.BASE_API_URL + '/user/register',
+            data: data
+        })
     },
 }
