@@ -4,6 +4,7 @@ namespace App\Http\Repositorys;
 
 use App\Models\Reservation;
 use App\Models\Doctor;
+use App\Models\Clinic;
 use \Datetime;
 
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,9 @@ class ReservationRepository
         $user = Auth::user();
         $customer = $user->customers()->first();
         $customer_name = $customer->name();
-
+        $datetime = Datetime::createFromFormat('Y-m-d', date('Y-m-d',strtotime($reservation_data['date'])));// + " " + $reservation_data['time']
+        $time = Datetime::createFromFormat('H:i', date('H:i',strtotime($reservation_data['time'])));
+        $datetime->setTime($time->format('H'), $time->format('i'), $time->format('s'));
         $reservation = Reservation::firstOrNew(
             [
                 'id' => $reservation_id,
@@ -53,7 +56,7 @@ class ReservationRepository
         $reservation->pet_age = $reservation_data['pet_age'];
         $reservation->serve_type = $reservation_data['serve_type'];
         $reservation->note = $reservation_data['note'];
-        $reservation->datetime = $reservation_data['date'];
+        $reservation->datetime = $datetime;
         $reservation->doctor_id = $reservation_data['doctor_id'];
         $reservation->clinic_id = $reservation_data['clinic_id'];
         $reservation->save();
@@ -103,13 +106,13 @@ class ReservationRepository
                                     ->whereDate('datetime', '=', $date)
                                     ->get()->each(function(&$reservation) {
                     $doctor = Doctor::where('id', '=', $reservation['doctor_id'])->first();
-                    echo $doctor;
                     $reservation['doctor_name'] = $doctor->name();
-                    $datetime = Datetime::createFromFormat('Y-m-d H:i', $reservation['datetime']);
+                    $datetime = Datetime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i',strtotime($reservation['datetime'])));
                     $reservation['date'] = $datetime->format('Y-m-d');
                     $reservation['time'] = $datetime->format('H:i');
+                    $reservation['reservation_id'] = strval($reservation['id']);
                 }
-                )->makeHidden(['doctor_id', 'datetime']);
+                )->makeHidden(['doctor_id', 'datetime', 'id', 'clinic_id']);
         return $reservations;
     }
 
@@ -165,5 +168,30 @@ class ReservationRepository
             $update_array['datetime'] = $datetime->format('Y-m-d H:i:s');
             $reservation->update($update_array);            
         }
+    }
+
+    /**
+     * 查詢看診資訊
+     * @param  Int $clinic_id [診所id]
+     * @param  Int $date     [日期]
+     * @return Object  $doctors_data    [看診資料]
+     */
+    public function getReservationInfoByDate($clinic_id, $date)
+    {
+        // find() only works with single-column keys, so we use where() here
+        $doctors_data = [];
+        Clinic::find($clinic_id)->doctors()->each(function($doctor) use (&$doctors_data, $date) {
+            // Append doctor data to doctors
+            $doctors_data[] = [
+                'doctor_id' => $doctor->id,
+                'doctor_name' => $doctor->name(),
+                'diagnosis_time_list' => $doctor->reservations()->whereDate('datetime', '=', $date)->get()->each(function(&$diagnosis_info) {
+                    $diagnosis_time = Datetime::createFromFormat('Y-m-d H:i:s', $diagnosis_info['datetime']);
+                    $diagnosis_info['diagnosis_time'] = $diagnosis_time->format('H:i');
+                }
+                )->makeHidden(['id', 'clinic_id', 'phone', 'pet_name', 'pet_variety', 'pet_gender', 'pet_age', 'note', 'customer_name', 'customer_id', 'doctor_id', 'datetime']),
+            ];
+        });
+        return $doctors_data;
     }
 }

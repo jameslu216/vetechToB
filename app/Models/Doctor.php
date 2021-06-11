@@ -23,14 +23,9 @@ class Doctor extends User
         return $this->user()->first()->name;
     }
 
-    public function diagnosisInfos()
-    {
-        return $this->hasMany('App\Models\DiagnosisInfo', 'doctor_id', 'id');
-    }
-
     public function diagnosisTimes()
     {
-        return $this->hasMany('App\Models\DiagnosisTime', 'doctor_id', 'id');
+        return $this->hasMany('App\Models\DiagnosisTime', 'doctor_id', 'user_id');
     }
 
     public function clinic()
@@ -40,6 +35,6 @@ class Doctor extends User
 
     public function reservations()
     {
-        return $this->hasMany('App\Models\Reservation', 'doctor_id', 'id');
+        return $this->hasMany('App\Models\Reservation', 'doctor_id', 'user_id');
     }
 }

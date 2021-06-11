@@ -56,7 +56,9 @@ class ReservationController extends BaseController
             return response('error', 400);
         }
         $reservation_data = $this->ReservationService->getReservationData($clinic_id, $date);
-        return response()->json($reservation_data, 200);
+        $return_data = [];
+        $return_data["reservation_list"] = $reservation_data;
+        return response()->json($return_data, 200);
     }
  
 
@@ -102,5 +104,24 @@ class ReservationController extends BaseController
         }
         $this->ReservationService->modifyReservation($modify_reservation_data);
         return response()->json($modify_reservation_data, 200);
+    }
+
+    /**
+     * 查詢看診資訊
+     * @param  Request $request     [description]
+     * @return Json  $reservation_info_data    [轉移預約資料]
+     */
+    public function getReservationInfo(Request $request)
+    {
+        $clinic_id = $request->clinic_id;
+        $date = date($request->date);
+        if (
+            empty($clinic_id) ||
+            empty($date)
+        ) {
+            return response('error', 400);
+        }
+        $reservation_info_data = $this->ReservationService->getReservationInfoByDate($clinic_id, $date);
+        return response()->json($reservation_info_data, 200);            
     }
 }

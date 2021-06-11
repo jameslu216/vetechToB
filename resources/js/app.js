@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import { FormCheckboxPlugin,CalendarPlugin,InputGroupPlugin,FormInputPlugin,FormDatepickerPlugin,FormTextareaPlugin,LayoutPlugin} from 'bootstrap-vue'
+import Vuex from 'vuex';
+import { BootstrapVue, FormCheckboxPlugin, CalendarPlugin, InputGroupPlugin, FormInputPlugin, FormDatepickerPlugin, FormTextareaPlugin, LayoutPlugin } from 'bootstrap-vue'
 Vue.use(CalendarPlugin)
 Vue.use(FormDatepickerPlugin)
 Vue.use(InputGroupPlugin)
@@ -7,17 +8,18 @@ Vue.use(FormInputPlugin)
 Vue.use(FormTextareaPlugin)
 Vue.use(LayoutPlugin)
 Vue.use(FormCheckboxPlugin)
-
-
+Vue.use(Vuex);
+Vue.use(BootstrapVue)
 
 window.Vue = Vue;
 
 require('./bootstrap');
 import router from './route';
-
+import store from './Vuex/index'
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store,
 });
 
 

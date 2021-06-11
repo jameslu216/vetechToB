@@ -69,11 +69,11 @@ class UserController extends BaseController
             // TODO check password SHA256
             // https://stackoverflow.com/questions/16875249/how-to-check-if-string-is-a-valid-sha256-hash-in-php
         ) {
-            return response()->json(["error_log" => "輸入資料不完整"], 200);
+            return response()->json(["error_log" => "輸入資料不完整"], 400);
         }
         $user = $this->UserService->getUser($login_data);
         if (!$user) {
-            return response()->json(["error_log" => "帳號或密碼輸入錯誤"], 200);
+            return response()->json(["error_log" => "帳號或密碼輸入錯誤"], 400);
         }
         $api_token = Str::random(64);
         if($user->update(['api_token'=>$api_token])) {
