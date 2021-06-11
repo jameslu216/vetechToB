@@ -65,20 +65,26 @@ export default {
   },
   methods: {
     register() {
+      const vm=this;
       let registerRequirements = {
         name: this.name,
         email: this.email,
         password: this.password,
         phone: this.phone,
-        pet: {
+        pet: [{
           name: this.pet_name,
           variety: this.pet_variety,
           gender: this.pet_gender,
-        },
+        }],
       };
       httpAPI.userRegister(registerRequirements).then(function (response) {
-        console.log(response);
-      });
+        if(reponse==='failed')
+        {
+            alert('帳號密碼輸入錯誤')
+        }
+            vm.$store.commit("SET_HAS_LOGIN", true);
+
+    });
     },
   },
 };
