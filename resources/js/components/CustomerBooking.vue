@@ -155,7 +155,7 @@
             class="w-100 leftblock normal_text"
             stacked
             value-field="item"
-            text-field="name"
+            text-field="item"
             disabled-field="notEnabled"
           ></b-form-checkbox-group>
         </div>
@@ -367,19 +367,29 @@ export default {
       servable_doctor: [],
       servable_time: [],
       service_type: [
-        { item: "年度體檢", name: "年度體檢" },
-        { item: "請於10分鐘前到達", name: "新客戶(請於10分鐘前到達)" },
-        { item: "疫苗接種", name: "疫苗接種" },
-        { item: "藥物Refill", name: "藥物Refill" },
-        { item: "手術", name: "手術" },
-        { item: "生病動物檢查", name: "生病動物檢查" },
-        { item: "超音波", name: "超音波" },
-        { item: "血檢", name: "血檢" },
-        { item: "其他", name: "其他" },
+        // { item: "年度體檢", name: "年度體檢" },
+        // { item: "請於10分鐘前到達", name: "新客戶(請於10分鐘前到達)" },
+        // { item: "疫苗接種", name: "疫苗接種" },
+        // { item: "藥物Refill", name: "藥物Refill" },
+        // { item: "手術", name: "手術" },
+        // { item: "生病動物檢查", name: "生病動物檢查" },
+        // { item: "超音波", name: "超音波" },
+        // { item: "血檢", name: "血檢" },
+        // { item: "其他", name: "其他" },
       ],
       min_date: minDate,
       max_date: maxDate,
     };
+  },
+  watch: {
+    clinic(newVal, oldVal) {
+      this.service_type = newVal.service_type
+        .split(",")
+        .map(function (item) {
+          return {item: item}; // 比較大於五歲的
+        });
+      console.log(this.service_type);
+    },
   },
   created() {
     let self = this;
@@ -388,8 +398,7 @@ export default {
       self.clinic = response.data;
     });
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     submitBooking() {
       let service_type = "";
