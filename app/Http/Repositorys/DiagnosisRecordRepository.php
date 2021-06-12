@@ -11,7 +11,7 @@ class DiagnosisRecordRepository
     /**
      * 新增看診紀錄
      * @param  Array $diagnosis_note [診後紀錄]    
-     * @param  Array $reservation [預約資訊]
+     * @param  Object $reservation [預約資訊]
      */
     public function createDiagnosisRecord(&$diagnosis_note, &$reservation)
     {
@@ -34,7 +34,7 @@ class DiagnosisRecordRepository
         $diagnosis_record->pet_variety = $reservation->pet_variety;
         $diagnosis_record->pet_gender = $reservation->pet_gender;
         $diagnosis_record->pet_age = $reservation->pet_age;
-        $diagnosis_record->serve_type = $reservation->serve_type;
+        $diagnosis_record->service_type = $reservation->service_type;
         $diagnosis_record->note = $reservation->note;
         $diagnosis_record->datetime = $reservation->datetime;
         $diagnosis_record->doctor_id = $reservation->doctor_id;

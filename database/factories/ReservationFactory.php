@@ -33,7 +33,7 @@ class ReservationFactory extends Factory
             $latest_reservation->modify('+ 1 hour');
         }
         $doctor_id = $this->faker->numberBetween(1, Doctor::count());
-        $clinic_id = Doctor::find($doctor_id)->clinic_id;
+        $clinic_id = Doctor::where('user_id', '=', $doctor_id)->first()->clinic_id;
         return [
             'id' => $this->faker->unique()->randomNumber(7),
             'customer_name' => $this->faker->name,
@@ -43,7 +43,7 @@ class ReservationFactory extends Factory
             'pet_variety' => "doge",
             'pet_gender' => "male",
             'pet_age' => 2,
-            'serve_type' => "surgery",
+            'service_type' => "surgery",
             'note' => "No note, no",
             'datetime' => $latest_reservation,
             'doctor_id' => $doctor_id,

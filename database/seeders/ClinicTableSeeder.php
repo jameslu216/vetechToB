@@ -32,7 +32,7 @@ class ClinicTableSeeder extends Seeder
                 $ServeTime->end_at = '21:30';
                 $clinic->serveTimes()->save($ServeTime);
             }
-            $clinic->doctors()->save(Doctor::find($count));
+            // $clinic->doctors()->save(Doctor::where('user_id', '=', $count)->first());
             ++$count;
         });
     }
