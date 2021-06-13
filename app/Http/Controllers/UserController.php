@@ -44,13 +44,10 @@ class UserController extends BaseController
             return response('error', 400);
         }
         $user = $this->UserService->createUser($register_data);
-        $this->CustomerService->createCustomer($user);
-        // TODO create customer from user
-        // $user = $this->UserService->createUser($register_data);
-        // FIXME this if statement might be useless
         if (empty($user['email'])) {
             return response('error', 400);            
         }
+        $this->CustomerService->createCustomer($user);
         $this->PetService->createPetToUser($user, $register_data);
         return response()->json($register_data, 200);
     }
