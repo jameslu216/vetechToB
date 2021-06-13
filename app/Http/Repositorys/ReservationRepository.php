@@ -32,24 +32,22 @@ class ReservationRepository
 
         $user = Auth::user();
         $customer = $user->customers()->first();
-        $customer_name = $customer->name();
-        $datetime = Datetime::createFromFormat('Y-m-d', date('Y-m-d',strtotime($reservation_data['date'])));// + " " + $reservation_data['time']
-        $time = Datetime::createFromFormat('H:i', date('H:i',strtotime($reservation_data['time'])));
-        $datetime->setTime($time->format('H'), $time->format('i'), $time->format('s'));
+
+        $datetime = Datetime::createFromFormat('Y-m-d H:i', $reservation_data['datetime']);
         $reservation = Reservation::firstOrNew(
             [
                 'id' => $reservation_id,
                 'clinic_id' => $reservation_data['clinic_id'],
                 // 'customer_name' => $customer_name,
-                'customer_id' => $customer->id,
+                'customer_id' => $customer->user_id,
                 'pet_name' => $reservation_data['pet_name'],
-                'datetime' => $reservation_data['date'],
+                'datetime' => $reservation_data['datetime'],
             ]
         );
         $reservation->id = $reservation_id;
-        $reservation->customer_name = $customer_name;
-        $reservation->customer_id = $customer->id;
-        $reservation->phone = $user->phone;
+        $reservation->customer_name = $reservation_data['customer_name'];
+        $reservation->customer_id = $customer->user_id;
+        $reservation->phone = $reservation_data['phone'];
         $reservation->pet_name = $reservation_data['pet_name'];
         $reservation->pet_variety = $reservation_data['pet_variety'];
         $reservation->pet_gender = $reservation_data['pet_gender'];

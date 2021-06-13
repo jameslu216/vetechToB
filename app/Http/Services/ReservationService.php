@@ -18,7 +18,7 @@ class ReservationService
      */
     public function createReservation(&$reservation_data)
     {
-        $available = $this->checkReservationAvailable($reservation_data['clinic_id'], $reservation_data['date']);
+        $available = $this->checkReservationAvailable($reservation_data['clinic_id'], $reservation_data['datetime']);
         if($available){
             $this->ReservationRepository->createReservation($reservation_data);
             return true;
