@@ -11,6 +11,7 @@ export const login = {
     */
     state: {
         hasLogin: false,
+        userInfo:{}
     },
     actions: {
 
@@ -19,6 +20,10 @@ export const login = {
         SET_HAS_LOGIN(state, value) {
             state.hasLogin = value;
         },
+        SET_USER_INFO(state,value)
+        {
+            state.userInfo=value;
+        }
     },
     getters: {
     }

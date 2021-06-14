@@ -31,7 +31,7 @@
               <div class="record_content_s">{{ item.pet_name }}</div>
               <div class="record_content_s">{{ item.pet_gender }}</div>
               <div class="record_content_s">{{ item.customer_name }}</div>
-              <div class="record_content_s">{{ item.doctor }}</div>
+              <div class="record_content_s">{{ item.doctor_name }}</div>
               <div class="record_content_s">{{ item.service_type }}</div>
               <div class="record_content_m">{{ item.note }}</div>
               <div class="record_content_m">{{ item.phone }}</div>
@@ -89,7 +89,7 @@
                     v-for="(object, index) in looking_list"
                     :key="index"
                   >
-                    <div class="col-4 p-0">{{ object.doctor }}</div>
+                    <div class="col-4 p-0">{{ object.doctor_name }}</div>
                     <div class="col-4 p-0">{{ object.customer_name }}</div>
                     <div class="col-4 p-0">
                       <b-button
@@ -105,7 +105,7 @@
               </div>
               <b-modal title="請填寫診後備注" v-model="modalShow">
                 <textarea class="w-100" v-model="note"></textarea>
-                <template #modal-footer="{ ok, cancel }">
+                <template #modal-footer="{ cancel }">
                   <b-button size="sm" variant="danger" @click="cancel()">
                     取消
                   </b-button>
@@ -175,7 +175,7 @@ export default {
           pet_name: "BoBo",
           pet_gender: "F(S)",
           customer_name: "陳先生",
-          doctor: "Dr.Chen",
+          doctor_name: "Dr.Chen",
           service_type: "定期健檢",
           note: "發現小型肉塊",
           phone: "0912345678",
@@ -191,7 +191,6 @@ export default {
     const now = new Date();
     let month = now.getMonth() + 1;
     let date = now.getDate();
-    console.log(typeof month);
     if (month < 10) {
       month = `0${month}`;
     }
@@ -206,15 +205,12 @@ export default {
     getReservation(today) {
       const vm = this;
       httpAPI.getReservation(this.clinic_id, today).then(function (response) {
-        //Edge TODO
-        //vm.reservation = response.data;
+        vm.reservation = response.data.reservation_list;
       });
     },
     getDiagnosisInfo(today) {
       const vm = this;
       httpAPI.getDiagnosisInfo(this.clinic_id, today).then(function (response) {
-        console.log(response.data);
-
         vm.doctor_diagnosis_list = response.data;
       });
     },
@@ -225,7 +221,6 @@ export default {
     exitDiagnosis() {
       this.saveDiagnosisRecord(this.looking_list[this.exit_id]);
       this.looking_list.splice(this.exit_id, 1);
-
     },
     saveDiagnosisRecord(object) {
       let data = {
@@ -233,7 +228,6 @@ export default {
         reservation_id: object.id,
         "diagosis_note:": this.note,
       };
-      console.log(data);
       httpAPI.saveDiagnosisRecord(data).then(function (response) {});
     },
   },

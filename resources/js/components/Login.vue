@@ -62,6 +62,7 @@ export default {
           alert("帳號密碼輸入錯誤");
         }
         vm.$store.commit("SET_HAS_LOGIN", true);
+        vm.$store.commit("SET_USER_INFO", response);   
       });
     },
   },

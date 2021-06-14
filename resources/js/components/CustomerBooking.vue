@@ -199,10 +199,13 @@
                     @selected="showServableTime()"
                   ></b-calendar>
                 </div>
-                <div v-if="servable_time" class="row mx-0 p-0 booking_time">
+                <div
+                  v-if="servable_time[0] != undefined"
+                  class="row mx-0 p-0 booking_time"
+                >
                   <div
                     class="col-4 p-0 my-3"
-                    v-for="(time, index) in servable_time[0]"
+                    v-for="(time, index) in servable_time[0].times"
                     :key="index"
                     @click="selected_time = time"
                   >
@@ -355,6 +358,7 @@ export default {
       selected_time: "",
       customer_name: "",
       customer_phone_number: "",
+      customer_api_token: "",
       pet_name: "",
       pet_gender: "",
       pet_variety: "",
@@ -383,12 +387,14 @@ export default {
   },
   watch: {
     clinic(newVal, oldVal) {
-      this.service_type = newVal.service_type
-        .split(",")
-        .map(function (item) {
-          return {item: item}; // 比較大於五歲的
-        });
-      console.log(this.service_type);
+      this.service_type = newVal.service_type.split(",").map(function (item) {
+        return { item: item }; // 比較大於五歲的
+      });
+    },
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.login.userInfo;
     },
   },
   created() {
@@ -397,6 +403,9 @@ export default {
     httpAPI.getClinic(this.clinic.id).then(function (response) {
       self.clinic = response.data;
     });
+    this.customer_name = this.userInfo.name;
+    this.customer_phone_number = this.userInfo.phone;
+    this.customer_api_token = this.userInfo.api_token;
   },
   mounted() {},
   methods: {
@@ -418,12 +427,11 @@ export default {
         pet_age: this.pet_variety,
         service_type: service_type,
         note: this.pet_note,
-        date: `${this.selected_date} ${this.selected_time}`,
-        doctor_id: "1",
+        datetime: `${this.selected_date} ${this.selected_time}`,
+        doctor_id: this.servable_time[0].doctor_id,
       };
       //預約
-      console.log(data);
-      httpAPI.addReservation(data);
+      httpAPI.addReservation(data, this.customer_api_token);
     },
     showServableTime() {
       // selected_date:"2021-05-15"
@@ -432,7 +440,6 @@ export default {
       // this.servable_time = response.times;
       this.selected_day = this.formatted_date.getDay();
       if (this.selected_day == 0) this.selected_day = 7;
-      let vm = this;
       const servable_doctor = [];
       const servable_time = [];
       //取得當日空閑時間
@@ -441,11 +448,11 @@ export default {
         .then(function (response) {
           for (let object in response.data) {
             servable_doctor.push(object);
-            servable_time.push(response.data[object].times);
+            servable_time.push(response.data[object]);
           }
         });
-      vm.servable_doctor = servable_doctor;
-      vm.servable_time = servable_time;
+      this.servable_doctor = servable_doctor;
+      this.servable_time = servable_time;
     },
     dateDisabled(ymd, date) {
       // Disable weekends (Sunday = `0`, Saturday = `6`) and
