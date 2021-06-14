@@ -389,6 +389,9 @@ export default {
           return {item: item}; // 比較大於五歲的
         });
       console.log(this.service_type);
+  computed: {
+    userInfo() {
+      return this.$store.state.login.userInfo;
     },
   },
   created() {
@@ -397,6 +400,9 @@ export default {
     httpAPI.getClinic(this.clinic.id).then(function (response) {
       self.clinic = response.data;
     });
+    this.customer_name = this.userInfo.name;
+    this.customer_phone_number = this.userInfo.phone;
+    this.customer_api_token = this.userInfo.api_token;
   },
   mounted() {},
   methods: {
@@ -422,7 +428,7 @@ export default {
         doctor_id: "1",
       };
       //預約
-      console.log(data);
+      httpAPI.addReservation(data, this.customer_api_token);
       httpAPI.addReservation(data);
     },
     showServableTime() {
