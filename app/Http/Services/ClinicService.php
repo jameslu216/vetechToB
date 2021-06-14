@@ -39,7 +39,7 @@ class ClinicService
         foreach ($doctor_datas as $doctor) {
             $diagnosis_times = $doctor->diagnosisTimes->where('day', $day);
             $time_collection = collect([]);
-            foreach($diagnosis_times as $diagnosis_time){
+            foreach ($diagnosis_times as $diagnosis_time) {
                 $time_collection = $time_collection->merge($this->getTimeCollectonByStartAndEnd($diagnosis_time->start_at, $diagnosis_time->end_at));
             }
             $reservation = $this->ReservationRepository->getReservationByClinicIdAndDate($clinic_id, $date)->groupBy('doctor_id');
@@ -48,10 +48,12 @@ class ClinicService
                 return date('H:i', strtotime($date));
             });
             $time_collection = $time_collection->diff($reservation); //醫生當天可用時間與被預約的時間取差集
-            $time_collection = $time_collection->filter(function($time){
-                return $time > date('H:i');
-            });
-            $doctor_free_datas[$doctor->user->name] = ['times' => array_values($time_collection->toArray())];
+            if($date == date('Y-m-d')){
+                $time_collection = $time_collection->filter(function ($time) {
+                    return $time > date('H:i');
+                });
+            }
+            $doctor_free_datas[$doctor->user->name] = ['times' => array_values($time_collection->toArray()), 'doctor_id' => $doctor->user_id];
         }
         return $doctor_free_datas;
     }
