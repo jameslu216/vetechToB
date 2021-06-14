@@ -25,9 +25,24 @@ class DoctorFactory extends Factory
      */
     public function definition()
     {
+        /*
+        $available_clinic_id_collection = Clinic::whereNotIn('id', Doctor::get(['clinic_id'])->toArray())->get()->map(function ($clinic) {
+            return $clinic->id; 
+        });
+        if (count($available_clinic_id_collection) == 0) {
+            $clinic_id = 1;
+        } else {
+            $clinic_id = $available_clinic_id_collection->random();
+        }
+        echo $clinic_id;
         return [
             'user_id' => self::$order++,
-            'clinic_id' => $this->faker->numberBetween(1, Clinic::count())
+            'clinic_id' => $clinic_id
+        ];
+        */
+        return [
+            'user_id' => self::$order,
+            'clinic_id' => self::$order++
         ];
     }
 }

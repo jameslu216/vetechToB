@@ -26,7 +26,7 @@ class PetRepository
                             'gender' => $pet_data['gender'],
                         ]
                     );
-                    $pet->customer_id = $user->customers()->first()->id;
+                    $pet->customer_id = $user->id;
                     $pet->name = $pet_data['name'];
                     $pet->variety = $pet_data['variety'];
                     $pet->age = 1;

@@ -28,11 +28,10 @@ class ReservationController extends BaseController
     public function createReservation(Request $request)
     {
         $reservation_data = $request->all();
-        $reservation_data['date'] = date($reservation_data['date']);
         if (
             empty($reservation_data['clinic_id']) ||
-            empty($reservation_data['date']) ||
-            $reservation_data['date'] < date("Y-m-d H:i")
+            empty($reservation_data['datetime']) ||
+            $reservation_data['datetime'] < date("Y-m-d H:i")
         ) {
             return response('error', 400);
         }
