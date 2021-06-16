@@ -33,7 +33,7 @@ class ReservationController extends BaseController
             empty($reservation_data['datetime']) ||
             $reservation_data['datetime'] < date("Y-m-d H:i")
         ) {
-            return response('error', 400);
+            return response('預約時間不對', 400);
         }
         $is_success = $this->ReservationService->createReservation($reservation_data);
         if(!$is_success){
