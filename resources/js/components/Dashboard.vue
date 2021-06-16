@@ -30,7 +30,7 @@
               <div class="record_content_s">{{ item.time }}</div>
               <div class="record_content_s">{{ item.pet_name }}</div>
               <div class="record_content_s">{{ item.pet_gender }}</div>
-              <div class="record_content_s">{{ item.customer_name }}</div>
+              <div class="record_content_s">{{ item.patient_name }}</div>
               <div class="record_content_s">{{ item.doctor_name }}</div>
               <div class="record_content_s">{{ item.service_type }}</div>
               <div class="record_content_m">{{ item.note }}</div>
@@ -90,7 +90,7 @@
                     :key="index"
                   >
                     <div class="col-4 p-0">{{ object.doctor_name }}</div>
-                    <div class="col-4 p-0">{{ object.customer_name }}</div>
+                    <div class="col-4 p-0">{{ object.patient_name }}</div>
                     <div class="col-4 p-0">
                       <b-button
                         @click="
@@ -174,7 +174,7 @@ export default {
           time: "15:00",
           pet_name: "BoBo",
           pet_gender: "F(S)",
-          customer_name: "陳先生",
+          patient_name: "陳先生",
           doctor_name: "Dr.Chen",
           service_type: "定期健檢",
           note: "發現小型肉塊",
@@ -223,10 +223,11 @@ export default {
       this.looking_list.splice(this.exit_id, 1);
     },
     saveDiagnosisRecord(object) {
+      console.log(object)
       let data = {
         clinic_id: "1",
-        reservation_id: object.id,
-        "diagosis_note:": this.note,
+        reservation_id: object.reservation_id,
+        diagnosis_note: this.note,
       };
       httpAPI.saveDiagnosisRecord(data).then(function (response) {});
     },
