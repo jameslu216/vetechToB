@@ -16,8 +16,8 @@ class PetRepository
     public function createPetToUser(&$user, &$new_pet_data)
     {
         if (!empty($new_pet_data['pet'])) {
-            foreach ($new_pet_data['pet'] as $pet_data) {
-                if (is_array($pet_data)) {
+            foreach ($new_pet_data['pet'] as &$pet_data) {
+                if (is_array($pet_data) && !empty($pet_data['name']) && !empty($pet_data['variety']) && !empty($pet_data['gender'])) {
                     $pet = Pet::firstOrNew(
                         [
                             'name' => $pet_data['name'],
@@ -32,6 +32,8 @@ class PetRepository
                     $pet->age = 1;
                     $pet->gender = $pet_data['gender'];
                     $pet->save();
+                } else {
+                    $pet_data = [];
                 }
             }
             return true;            

@@ -37,7 +37,8 @@ class UserController extends BaseController
             empty($register_data['email']) ||
             empty($register_data['password']) ||
             empty($register_data['name']) ||
-            empty($register_data['phone'])
+            empty($register_data['phone']) ||
+            !filter_var($register_data['email'], FILTER_VALIDATE_EMAIL)
             // TODO check password SHA256
             // https://stackoverflow.com/questions/16875249/how-to-check-if-string-is-a-valid-sha256-hash-in-php
         ) {
