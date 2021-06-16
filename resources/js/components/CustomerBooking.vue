@@ -18,7 +18,7 @@
           </div>
           <div class="col-7 p-0">
             <textarea
-              v-model="customer_name"
+              v-model="patient_name"
               class="w-100"
               style="height: 32px"
               placeholder="必填"
@@ -356,7 +356,7 @@ export default {
       selected_date: "2021-5-22",
       selected_day: "",
       selected_time: "",
-      customer_name: "",
+      patient_name: "",
       customer_phone_number: "",
       customer_api_token: "",
       pet_name: "",
@@ -403,7 +403,7 @@ export default {
     httpAPI.getClinic(this.clinic.id).then(function (response) {
       self.clinic = response.data;
     });
-    this.customer_name = this.userInfo.name;
+    this.patient_name = this.userInfo.name;
     this.customer_phone_number = this.userInfo.phone;
     this.customer_api_token = this.userInfo.api_token;
   },
@@ -419,7 +419,7 @@ export default {
       //送出預約api
       let data = {
         clinic_id: this.clinic.id,
-        customer_name: this.customer_name,
+        patient_name: this.patient_name,
         phone: this.customer_phone_number,
         pet_name: this.pet_name,
         pet_variety: this.pet_variety,
