@@ -99,13 +99,14 @@ class ReservationRepository
 
         // find() only works with single-column keys, so we use where() here
         $date = DateTime::createFromFormat('Y-m-d', $date);
+
         $reservations = Reservation::where('clinic_id', '=', $clinic_id)
                                     ->whereDate('datetime', '=', $date)
                                     ->get()->each(function(&$reservation) {
                     $doctor = Doctor::where('user_id', '=', $reservation['doctor_id'])->first();
                     $reservation['doctor_name'] = $doctor->name();
                     $datetime = Datetime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i',strtotime($reservation['datetime'])));
-                    $reservation['date'] = $datetime->format('Y-m-d');
+                    $reservation['date'] = $datetime->format('m-d');
                     $reservation['time'] = $datetime->format('H:i');
                     $reservation['reservation_id'] = strval($reservation['id']);
                 }

@@ -10944,4 +10944,9 @@ a.text-dark:focus {
   }
 }
 
+.display_mid {
+  display: block;
+  margin: auto;
+}
+
 

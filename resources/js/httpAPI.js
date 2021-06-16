@@ -30,6 +30,10 @@ export default {
         let url = `${this.BASE_API_URL}/reservation/info?clinic_id=${clinic_id}&date=${date}`;
         return axios.get(url);
     },
+    getDiagnosisRecord: function (clinic_id, date) {
+        let url = `${this.BASE_API_URL}/diagnosis/record?clinic_id=${clinic_id}&customer_id=${date}`;
+        return axios.get(url);
+    },
     userLogin: function (data) {
         return axios({
             method: 'post',
@@ -50,6 +54,14 @@ export default {
             url: this.BASE_API_URL + '/user/register',
             data: data
         })
+        .then((res) => {
+            alert('註冊成功，登入後即可預約')
+            return res.data;
+        }
+        ).catch((res) => {
+            alert('註冊資料有欄位未填完整，請確認')
+            return 'failed';
+        });
     },
     saveDiagnosisRecord: function (data) {
         console.log(data)

@@ -49,7 +49,12 @@ export default {
       return this.$store.state.login.hasLogin;
     },
   },
-  mounted() {},
+  mounted() {
+    if(this.hasLogin){
+      alert('您已登入，可切往預約');
+      this.$router.push({path:"/booking"})
+    }
+  },
   methods: {
     login() {
       const vm = this;
@@ -60,10 +65,12 @@ export default {
       httpAPI.userLogin(loginRequirements).then(function (response) {
         if (response === "failed") {
           alert("帳號密碼輸入錯誤");
+          return;
         }
         vm.$store.commit("SET_HAS_LOGIN", true);
         vm.$store.commit("SET_USER_INFO", response);   
-      });
+        vm.$router.push({path:"/booking"})
+     });
     },
   },
 };
