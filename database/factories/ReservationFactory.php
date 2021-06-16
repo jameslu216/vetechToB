@@ -36,7 +36,7 @@ class ReservationFactory extends Factory
         $clinic_id = Doctor::where('user_id', '=', $doctor_id)->first()->clinic_id;
         return [
             'id' => $this->faker->unique()->randomNumber(7),
-            'customer_name' => $this->faker->name,
+            'patient_name' => $this->faker->name,
             'customer_id' => $this->faker->numberBetween(1, Customer::count()),
             'phone' => $this->faker->phoneNumber,
             'pet_name' => $this->faker->name,

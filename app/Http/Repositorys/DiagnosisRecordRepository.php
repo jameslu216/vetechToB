@@ -20,14 +20,14 @@ class DiagnosisRecordRepository
         $diagnosis_record = DiagnosisRecord::firstOrNew(
             [
                 'id' => $next_id,
-                'customer_name' => $reservation->customer_name,
+                'patient_name' => $reservation->patient_name,
                 'customer_id' => $reservation->customer_id,
                 'pet_name' => $reservation->pet_name,
                 'datetime' => $reservation->datetime,
                 'clinic_id' => $reservation->clinic_id,
             ]
         );
-        $diagnosis_record->customer_name = $reservation->customer_name;
+        $diagnosis_record->patient_name = $reservation->patient_name;
         $diagnosis_record->customer_id = $reservation->customer_id;
         $diagnosis_record->phone = $reservation->phone;
         $diagnosis_record->pet_name = $reservation->pet_name;
