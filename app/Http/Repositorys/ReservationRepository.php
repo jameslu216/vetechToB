@@ -18,7 +18,7 @@ class ReservationRepository
      */
     public function getReservationByClinicIdAndDate($clinic_id, $date)
     {
-        $reservation = Reservation::where('clinic_id', $clinic_id)->where('date', 'like', $date . '%')->get();
+        $reservation = Reservation::where('clinic_id', $clinic_id)->where('datetime', 'like', $date . '%')->get();
         return $reservation;
     }
 
@@ -68,8 +68,8 @@ class ReservationRepository
     public function getReservationByClinicIdAndDatetime($clinic_id, $datetime)
     {
         $reservation = Reservation::where('clinic_id', '=', $clinic_id)
-                                    ->where('datetime', '=', $datetime)
-                                    ->first();
+            ->where('datetime', '=', $datetime)
+            ->first();
         return $reservation;
     }
 
@@ -83,8 +83,8 @@ class ReservationRepository
     {
         // find() only works with single-column keys, so we use where() here
         $reservation = Reservation::where('clinic_id', '=', $clinic_id)
-                                    ->where('id', '=', $reservation_id)
-                                    ->first();
+            ->where('id', '=', $reservation_id)
+            ->first();
         return $reservation;
     }
 
@@ -101,16 +101,17 @@ class ReservationRepository
         $date = DateTime::createFromFormat('Y-m-d', $date);
 
         $reservations = Reservation::where('clinic_id', '=', $clinic_id)
-                                    ->whereDate('datetime', '=', $date)
-                                    ->get()->each(function(&$reservation) {
+            ->whereDate('datetime', '=', $date)
+            ->get()->each(
+                function (&$reservation) {
                     $doctor = Doctor::where('user_id', '=', $reservation['doctor_id'])->first();
                     $reservation['doctor_name'] = $doctor->name();
-                    $datetime = Datetime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i',strtotime($reservation['datetime'])));
+                    $datetime = Datetime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', strtotime($reservation['datetime'])));
                     $reservation['date'] = $datetime->format('m-d');
                     $reservation['time'] = $datetime->format('H:i');
                     $reservation['reservation_id'] = strval($reservation['id']);
                 }
-                )->makeHidden(['doctor_id', 'datetime', 'id', 'clinic_id']);
+            )->makeHidden(['doctor_id', 'datetime', 'id', 'clinic_id']);
         return $reservations;
     }
 
@@ -122,10 +123,10 @@ class ReservationRepository
     {
         // find() only works with single-column keys, so we use where() here
         $reservation = Reservation::where('id', '=', $remove_reservation_data['reservation_id'])
-                                    ->where('clinic_id', '=', $remove_reservation_data['clinic_id'])
-                                    ->first();
+            ->where('clinic_id', '=', $remove_reservation_data['clinic_id'])
+            ->first();
         if ($reservation) {
-            $reservation->delete();            
+            $reservation->delete();
             return true;
         } else {
             return false;
@@ -140,8 +141,8 @@ class ReservationRepository
     {
         // find() only works with single-column keys, so we use where() here
         $reservation = Reservation::where('id', '=', $modify_reservation_data['reservation_id'])
-                                    ->where('clinic_id', '=', $modify_reservation_data['clinic_id'])
-                                    ->first();
+            ->where('clinic_id', '=', $modify_reservation_data['clinic_id'])
+            ->first();
         if ($reservation) {
             $update_array = [];
             // should add in Reservation Model fillable
@@ -164,7 +165,7 @@ class ReservationRepository
                 $datetime->setTime($hour, $minute);
             }
             $update_array['datetime'] = $datetime->format('Y-m-d H:i:s');
-            $reservation->update($update_array);            
+            $reservation->update($update_array);
         }
     }
 
@@ -178,19 +179,19 @@ class ReservationRepository
     {
         // find() only works with single-column keys, so we use where() here
         $doctors_data = [];
-        Clinic::find($clinic_id)->doctors()->get()->each(function($doctor) use (&$doctors_data, $date) {
-            
+        Clinic::find($clinic_id)->doctors()->get()->each(function ($doctor) use (&$doctors_data, $date) {
+
             // Append doctor data to doctors
             $doctors_data[] = [
                 'doctor_id' => $doctor->user_id,
                 'doctor_name' => $doctor->name(),
-                'diagnosis_time_list' => $doctor->reservations()->whereDate('datetime', '=', $date)->get()->each(function(&$diagnosis_info) {
-                    $diagnosis_time = Datetime::createFromFormat('Y-m-d H:i:s', $diagnosis_info['datetime']);
-                    $diagnosis_info['diagnosis_time'] = $diagnosis_time->format('H:i');
-                }
+                'diagnosis_time_list' => $doctor->reservations()->whereDate('datetime', '=', $date)->get()->each(
+                    function (&$diagnosis_info) {
+                        $diagnosis_time = Datetime::createFromFormat('Y-m-d H:i:s', $diagnosis_info['datetime']);
+                        $diagnosis_info['diagnosis_time'] = $diagnosis_time->format('H:i');
+                    }
                 )->makeHidden(['id', 'clinic_id', 'phone', 'pet_name', 'pet_variety', 'pet_gender', 'pet_age', 'note', 'patient_name', 'customer_id', 'doctor_id', 'datetime']),
             ];
-            
         });
         return $doctors_data;
     }
