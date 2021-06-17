@@ -18,12 +18,16 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
     <!-- Styles -->
- 
+
 </head>
 
 <body>
     <div id="app">
         <router-view></router-view>
-      </div>
+    </div>
 </body>
+<script>
+    var api_url = "{{env('API_URL')}}";
+</script>
+
 </html>
