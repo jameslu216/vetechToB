@@ -12,7 +12,7 @@ class DiagnosisRecord extends Model
     protected $table = 'diagnosis_record';
     public $timestamps = false;
 
-    protected $fillable = ['id', 'clinic_id', 'customer_name', 'customer_id', 'phone', 'pet_name', 'datetime', 'diagnosis_note'];
+    protected $fillable = ['id', 'clinic_id', 'patient_name', 'customer_id', 'phone', 'pet_name', 'datetime', 'diagnosis_note'];
 
     public function clinic()
     {

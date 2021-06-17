@@ -12,19 +12,16 @@ import { login } from './Login';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-    modules: {
-       login,
+  modules: {
+    login,
+  },
+  state: {},
+  getters: {},
+  mutations: {
+    SET_TEST(state, value) {
+      state.test = value;
     },
-    state: {
-    },
-    getters: {
-     
-    },
-    mutations: {
-        SET_TEST(state, value) {
-            state.test = value;
-        },
-    },
+  },
 });
 
 export default store;

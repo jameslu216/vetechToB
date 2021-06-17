@@ -26,7 +26,7 @@ class DiagnosisRecordFactory extends Factory
     {
         return [
             'id' => $this->faker->unique()->randomNumber(7),
-            'customer_name' => $this->faker->name,
+            'patient_name' => $this->faker->name,
             'phone' => $this->faker->phoneNumber,
             'pet_name' => $this->faker->name,
             'pet_variety' => "doge",

@@ -38,14 +38,13 @@ class ReservationRepository
             [
                 'id' => $reservation_id,
                 'clinic_id' => $reservation_data['clinic_id'],
-                // 'customer_name' => $customer_name,
                 'customer_id' => $customer->user_id,
                 'pet_name' => $reservation_data['pet_name'],
                 'datetime' => $reservation_data['datetime'],
             ]
         );
         $reservation->id = $reservation_id;
-        $reservation->customer_name = $reservation_data['customer_name'];
+        $reservation->patient_name = $reservation_data['patient_name'];
         $reservation->customer_id = $customer->user_id;
         $reservation->phone = $reservation_data['phone'];
         $reservation->pet_name = $reservation_data['pet_name'];
@@ -100,13 +99,14 @@ class ReservationRepository
 
         // find() only works with single-column keys, so we use where() here
         $date = DateTime::createFromFormat('Y-m-d', $date);
+
         $reservations = Reservation::where('clinic_id', '=', $clinic_id)
                                     ->whereDate('datetime', '=', $date)
                                     ->get()->each(function(&$reservation) {
                     $doctor = Doctor::where('user_id', '=', $reservation['doctor_id'])->first();
                     $reservation['doctor_name'] = $doctor->name();
                     $datetime = Datetime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i',strtotime($reservation['datetime'])));
-                    $reservation['date'] = $datetime->format('Y-m-d');
+                    $reservation['date'] = $datetime->format('m-d');
                     $reservation['time'] = $datetime->format('H:i');
                     $reservation['reservation_id'] = strval($reservation['id']);
                 }
@@ -188,7 +188,7 @@ class ReservationRepository
                     $diagnosis_time = Datetime::createFromFormat('Y-m-d H:i:s', $diagnosis_info['datetime']);
                     $diagnosis_info['diagnosis_time'] = $diagnosis_time->format('H:i');
                 }
-                )->makeHidden(['id', 'clinic_id', 'phone', 'pet_name', 'pet_variety', 'pet_gender', 'pet_age', 'note', 'customer_name', 'customer_id', 'doctor_id', 'datetime']),
+                )->makeHidden(['id', 'clinic_id', 'phone', 'pet_name', 'pet_variety', 'pet_gender', 'pet_age', 'note', 'patient_name', 'customer_id', 'doctor_id', 'datetime']),
             ];
             
         });

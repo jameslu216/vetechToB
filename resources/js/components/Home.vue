@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="app"
-    class="row m-0"
-    style="z-index: -1; padding-bottom: 50px; border-radius: 10px"
-  >
+  <div id="app" class="row m-0" style="z-index: -1; padding-bottom: 50px; border-radius: 10px">
     <div class="col-12" style="background-color: #575757">
       <div class="row">
         <div class="col-5 col-md-2 p-0">
@@ -11,21 +7,15 @@
         </div>
         <div v-if="hasLogin" class="col-7 col-md-4 p-0 pt_90px" id="nav">
           <div class="row">
-            <router-link class="col-5 p-0" to="/booking">顧客預約</router-link>
-            <router-link class="col-7 p-0" to="/dashboard"
-              >醫院儀表板</router-link
-            >
+            <router-link class="col-5 col-md-6 p-0" to="/booking">顧客預約</router-link>
+            <router-link class="col-7 col-md-6 p-0" to="/dashboard">醫院儀表板</router-link>
           </div>
         </div>
-        <div class="p-0 col-12 col-md-6 col-md-pt_90px" id="nav">
+        <div v-if="!hasLogin" class="p-0 col-12 col-md-6 col-md-pt_90px" id="nav">
           <div class="row">
-            <router-link class="col-4 col-md-2 p-0" to="/">Home</router-link>
-            <router-link class="col-4 col-md-2 p-0" to="/login"
-              >登入</router-link
-            >
-            <router-link class="col-4 col-md-2 p-0" to="/register"
-              >註冊</router-link
-            >
+            <!-- <router-link class="col-4 col-md-4 p-0" to="/">Home</router-link> -->
+            <router-link class="col-6 col-md-4 p-0" to="/login">登入</router-link>
+            <router-link class="col-6 col-md-4 p-0" to="/register">註冊</router-link>
           </div>
         </div>
       </div>
@@ -35,9 +25,9 @@
   </div>
 </template>
 <script>
-import Hometext from "./Hometext";
+import Hometext from './Hometext';
 export default {
-  name: "Home",
+  name: 'Home',
   data() {
     return {};
   },
@@ -49,6 +39,13 @@ export default {
       return this.$store.state.login.hasLogin;
     },
   },
+  mounted() {
+    if (this.hasLogin) {
+      this.$router.push({ path: '/booking' });
+    } else if (!this.hasLogin) {
+      this.$router.push({ path: '/login' });
+    }
+  },
   methods: {},
 };
 </script>
@@ -56,6 +53,11 @@ export default {
 <style lang="scss">
 .pt_90px {
   padding-top: 90px !important;
+}
+@media screen and (min-width: 767px) {
+  .col-md-pt_90px {
+    padding-top: 90px !important;
+  }
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

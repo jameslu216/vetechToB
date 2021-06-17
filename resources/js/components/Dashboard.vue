@@ -1,16 +1,16 @@
 <template>
   <div class="col-12 m-0" style="background-color: #c4e1e1">
     <div class="row">
-      <div class="col-0-5 p-0" style="background-color: #c4c4c4"></div>
-      <div class="col-11-5 p-0">
+      <!-- <div class="col-0-5 p-0" style="background-color: #c4c4c4"></div> -->
+      <div class="col-12 p-0">
         <div class="row m-3 p-0">
           <div class="col-12 px-0 pb-3 upcoming_page">
             <div class="title_discription">
               <span>Upcoming Book</span>
             </div>
             <div class="row item_title">
-              <div class="title_colname_s title_text">日期</div>
-              <div class="title_colname_s title_text">時間</div>
+              <div class="title_colname_xs title_text">日期</div>
+              <div class="title_colname_xs title_text">時間</div>
               <div class="title_colname_s title_text">寵物姓名</div>
               <div class="title_colname_s title_text">寵物性別</div>
               <div class="title_colname_s title_text">飼主姓名</div>
@@ -21,46 +21,95 @@
               <div class="title_colname_m title_text">過往紀錄</div>
               <div class="title_colname_m title_text">進入診間</div>
             </div>
-            <div
-              v-for="(item, index) in reservation"
-              class="row py-3 mt-2 mb-2 record_col"
-              :key="index"
-            >
-              <div class="record_content_s">{{ item.date }}</div>
-              <div class="record_content_s">{{ item.time }}</div>
-              <div class="record_content_s">{{ item.pet_name }}</div>
-              <div class="record_content_s">{{ item.pet_gender }}</div>
-              <div class="record_content_s">{{ item.customer_name }}</div>
-              <div class="record_content_s">{{ item.doctor_name }}</div>
-              <div class="record_content_s">{{ item.service_type }}</div>
-              <div class="record_content_m">{{ item.note }}</div>
-              <div class="record_content_m">{{ item.phone }}</div>
-              <div class="record_content_m"><button>紀錄</button></div>
-              <div class="record_content_m">
-                <button v-on:click="startDiagnosis(index)">開始看診</button>
+            <div v-for="(item, index) in reservation" :key="index">
+              <div class="row py-3 mt-2 mb-2 reservation_col">
+                <div class="reservation_content_xs">
+                  {{ item.date }}
+                </div>
+                <div class="reservation_content_xs">
+                  {{ item.time }}
+                </div>
+                <div class="reservation_content_s">
+                  {{ item.pet_name }}
+                </div>
+                <div class="reservation_content_s">
+                  {{ item.pet_gender }}
+                </div>
+                <div class="reservation_content_s">
+                  {{ item.patient_name }}
+                </div>
+                <div class="reservation_content_s">
+                  {{ item.doctor_name }}
+                </div>
+                <div class="reservation_content_s">
+                  {{ item.service_type }}
+                </div>
+                <div class="reservation_content_m">
+                  {{ item.note }}
+                </div>
+                <div class="reservation_content_m">
+                  {{ item.phone }}
+                </div>
+                <div class="reservation_content_m">
+                  <button class="btn btn-info" style="font-size: 12px" v-on:click="getRecord(item.customer_id, index)">
+                    紀錄
+                  </button>
+                </div>
+                <div class="reservation_content_m">
+                  <button class="btn btn-success" style="font-size: 12px" v-on:click="startDiagnosis(index)">
+                    開始看診
+                  </button>
+                </div>
+              </div>
+              <div class="w-100">
+                <div class="row record_col" v-if="item.isOpenRecord != undefined && item.isOpenRecord == true">
+                  <div class="reservation_content_s">日期</div>
+                  <div class="reservation_content_s">時間</div>
+                  <div class="reservation_content_s">負責醫生</div>
+                  <div class="reservation_content_l">診前備註</div>
+                  <div class="reservation_content_l">診後備註</div>
+                </div>
+                <div
+                  v-for="record in diagnosis_record"
+                  v-bind:key="record.diagnosis_note"
+                  v-if="item.isOpenRecord != undefined && item.isOpenRecord == true"
+                >
+                  <div class="row record_col">
+                    <div class="reservation_content_s">
+                      {{ record.date }}
+                    </div>
+                    <div class="reservation_content_s">
+                      {{ record.time }}
+                    </div>
+                    <div class="reservation_content_s">
+                      {{ record.doctor_name }}
+                    </div>
+                    <div class="reservation_content_l">
+                      {{ record.note }}
+                    </div>
+                    <div class="reservation_content_l">
+                      {{ record.diagnosis_note }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="row m-3 p-0">
           <div class="col-12 px-0 pb-3">
             <div class="row m-0 p-0">
               <div class="col-8 p-0">
                 <div class="row">
-                  <div
-                    class="col-4 p-0"
-                    v-for="(doctor, index) in doctor_diagnosis_list"
-                    :key="doctor.doctor_id"
-                  >
+                  <div class="col-4 p-0" v-for="(doctor, index) in doctor_diagnosis_list" :key="doctor.doctor_id">
                     <div class="m-3 doctor_table">
                       <div class="title_discription">
                         <span>{{ doctor.doctor_name }}</span>
                       </div>
                       <div
-                        class="row record_col text-center"
-                        v-for="(
-                          doctor_reservation, index
-                        ) in doctor.diagnosis_time_list"
+                        class="row reservation_col text-center"
+                        v-for="(doctor_reservation, index) in doctor.diagnosis_time_list"
                         :key="index"
                       >
                         <div class="col-3">
@@ -84,13 +133,13 @@
                     <div class="col-4 title_text">飼主</div>
                     <div class="col-4 title_text">離開</div>
                   </div>
-                  <div
-                    class="row record_col text-center"
-                    v-for="(object, index) in looking_list"
-                    :key="index"
-                  >
-                    <div class="col-4 p-0">{{ object.doctor_name }}</div>
-                    <div class="col-4 p-0">{{ object.customer_name }}</div>
+                  <div class="row reservation_col text-center" v-for="(object, index) in looking_list" :key="index">
+                    <div class="col-4 p-0">
+                      {{ object.doctor_name }}
+                    </div>
+                    <div class="col-4 p-0">
+                      {{ object.patient_name }}
+                    </div>
                     <div class="col-4 p-0">
                       <b-button
                         @click="
@@ -103,16 +152,21 @@
                   </div>
                 </div>
               </div>
-              <b-modal title="請填寫診後備注" v-model="modalShow">
-                <textarea class="w-100" v-model="note"></textarea>
+              <b-modal title="請填寫診後資訊" v-model="modalShow">
+                <div class="row">
+                  <span class="col-3">費用</span>
+                  <input class="col-8" type="number" v-model="cost" />
+                </div>
+                <div class="row mt-3">
+                  <span class="col-3">診後備注</span>
+                  <textarea class="col-8" v-model="exit_note"></textarea>
+                </div>
                 <template #modal-footer="{ cancel }">
-                  <b-button size="sm" variant="danger" @click="cancel()">
-                    取消
-                  </b-button>
+                  <b-button size="sm" variant="danger" @click="cancel()"> 取消 </b-button>
                   <b-button
                     size="sm"
                     variant="success"
-                    @click="
+                    v-on:click="
                       exitDiagnosis();
                       modalShow = !modalShow;
                     "
@@ -136,55 +190,62 @@
   </div>
 </template>
 <script>
-import httpAPI from "../httpAPI.js";
+import httpAPI from '../httpAPI.js';
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   data() {
     return {
-      clinic_id: "1",
+      clinic_id: '1',
       doctor_diagnosis_list: [
         {
-          doctor_id: "1",
-          doctor_name: "Dr.Chen",
+          doctor_id: '1',
+          doctor_name: 'Dr.Chen',
           diagnosis_time_list: [
-            { diagnosis_time: "10:00", service_type: "手術門診" },
-            { diagnosis_time: "11:00", service_type: "藥物refill" },
-            { diagnosis_time: "12:00", service_type: "手術門診" },
+            { diagnosis_time: '10:00', service_type: '手術門診' },
+            { diagnosis_time: '11:00', service_type: '藥物refill' },
+            { diagnosis_time: '12:00', service_type: '手術門診' },
           ],
         },
         {
-          doctor_id: "2",
-          doctor_name: "Dr.Chen",
-          diagnosis_time_list: [
-            { diagnosis_time: "10:00", service_type: "手術門診" },
-          ],
+          doctor_id: '2',
+          doctor_name: 'Dr.Chen',
+          diagnosis_time_list: [{ diagnosis_time: '10:00', service_type: '手術門診' }],
         },
         {
-          doctor_id: "3",
-          doctor_name: "Dr.Chen",
-          diagnosis_time_list: [
-            { diagnosis_time: "10:00", service_type: "手術門診" },
-          ],
+          doctor_id: '3',
+          doctor_name: 'Dr.Chen',
+          diagnosis_time_list: [{ diagnosis_time: '10:00', service_type: '手術門診' }],
+        },
+      ],
+      diagnosis_record: [
+        {
+          date: '03/15',
+          time: '15:00',
+          doctor_name: '王威閒',
+          service_type: '手術',
+          note: '皮膚紅紅的',
+          diagnosis_note: '皮膚跳蚤驅逐',
         },
       ],
       reservation: [
         {
-          id: "023",
-          date: "03/16",
-          time: "15:00",
-          pet_name: "BoBo",
-          pet_gender: "F(S)",
-          customer_name: "陳先生",
-          doctor_name: "Dr.Chen",
-          service_type: "定期健檢",
-          note: "發現小型肉塊",
-          phone: "0912345678",
+          id: '023',
+          date: '03/16',
+          time: '15:00',
+          pet_name: 'BoBo',
+          pet_gender: 'F(S)',
+          patient_name: '陳先生',
+          doctor_name: 'Dr.Chen',
+          service_type: '定期健檢',
+          note: '發現小型肉塊',
+          phone: '0912345678',
         },
       ],
       modalShow: false,
       looking_list: [],
-      note: "",
-      exit_id: "",
+      cost: '',
+      exit_note: '',
+      exit_id: '',
     };
   },
   mounted() {
@@ -202,10 +263,22 @@ export default {
     this.getDiagnosisInfo(today);
   },
   methods: {
+    getRecord(customer_id, index) {
+      let clinic_id = '1';
+      this.reservation[index].isOpenRecord = !this.reservation[index].isOpenRecord;
+      const vm = this;
+      httpAPI.getDiagnosisRecord(clinic_id, customer_id).then(function (response) {
+        console.log(response.data);
+        vm.diagnosis_record = response.data;
+      });
+    },
     getReservation(today) {
       const vm = this;
       httpAPI.getReservation(this.clinic_id, today).then(function (response) {
         vm.reservation = response.data.reservation_list;
+        vm.reservation.forEach((object) => {
+          object.isOpenRecord = false;
+        });
       });
     },
     getDiagnosisInfo(today) {
@@ -223,12 +296,17 @@ export default {
       this.looking_list.splice(this.exit_id, 1);
     },
     saveDiagnosisRecord(object) {
+      const vm = this;
       let data = {
-        clinic_id: "1",
-        reservation_id: object.id,
-        "diagosis_note:": this.note,
+        clinic_id: '1',
+        reservation_id: object.reservation_id,
+        cost: this.cost,
+        diagnosis_note: this.exit_note,
       };
-      httpAPI.saveDiagnosisRecord(data).then(function (response) {});
+      httpAPI.saveDiagnosisRecord(data).then(function (response) {
+        vm.cost = '';
+        vm.exit_note = '';
+      });
     },
   },
 };
@@ -241,7 +319,7 @@ export default {
   width: 95%;
 }
 .title_text {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 .title_discription {
@@ -258,11 +336,17 @@ export default {
   min-height: 500px;
 }
 
-.record_col {
+.reservation_col {
   background-color: #c4e1e1;
   border-radius: 10px;
   margin: 6px;
   padding: 6px;
+}
+.record_col {
+  background-color: #96fed1;
+  border: 1px solid black;
+  margin: 0px 6px;
+  padding: 0px 6px;
 }
 .item_title {
   margin: 6px;
@@ -278,20 +362,32 @@ export default {
   min-height: 250px;
   background-color: white;
 }
+.title_colname_xs {
+  width: 6%;
+  text-align: center;
+}
 .title_colname_s {
-  width: 7.5%;
+  width: 8%;
   text-align: center;
 }
 .title_colname_m {
   text-align: center;
   width: 11%;
 }
-.record_content_s {
-  width: 7.5%;
+.reservation_content_xs {
+  width: 6%;
   text-align: center;
 }
-.record_content_m {
+.reservation_content_s {
+  width: 8%;
+  text-align: center;
+}
+.reservation_content_m {
   width: 11%;
+  text-align: center;
+}
+.reservation_content_l {
+  width: 20%;
   text-align: center;
 }
 </style>

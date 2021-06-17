@@ -18,7 +18,7 @@ class CreateReservationTable extends Migration
             $table->integer('clinic_id')->unsigned();
             $table->primary(['id', 'clinic_id']);
 
-            $table->string('customer_name');
+            $table->string('patient_name');
             $table->integer('customer_id')->unsigned();
             $table->string('phone');
             $table->string('pet_name');
