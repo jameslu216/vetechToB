@@ -15,7 +15,7 @@ class CreateServeTimeTable extends Migration
     {
         Schema::create('serve_time', function (Blueprint $table) {
             // $table->increments('id');
-            $table->integer('clinic_id')->unsigned();
+            $table->integer('clinic_id')->unsigned()->references('id')->on('clinic');
             $table->tinyInteger('day')->unsigned(); //星期幾
             // $table->tinyInteger('time_zone')->unsigned(); //哪一個時段 上午 中午 下午 代表 0 1 2
             $table->time('start_at');

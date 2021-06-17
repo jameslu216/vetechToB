@@ -36,12 +36,3 @@ class ServeTimeSeeder extends Seeder
         ServeTime::factory()->insert($data);
     }
 }
-
-$a = new App\Models\ServeTime
-$a->clinic_id = "1";
-$a->day = "2";
-$a->time_zone = "1";
-$a->start_at = "09:00:00";
-$a->end_at = "18:00:00";
-$a->save();
-
