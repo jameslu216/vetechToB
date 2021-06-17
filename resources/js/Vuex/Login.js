@@ -7,24 +7,20 @@
 
 export const login = {
     /*
-      Defines the state used by the module
-    */
+        Defines the state used by the module
+      */
     state: {
         hasLogin: false,
-        userInfo:{}
+        userInfo: {}
     },
-    actions: {
-
-    },
+    actions: {},
     mutations: {
         SET_HAS_LOGIN(state, value) {
             state.hasLogin = value;
         },
-        SET_USER_INFO(state,value)
-        {
-            state.userInfo=value;
+        SET_USER_INFO(state, value) {
+            state.userInfo = value;
         }
     },
-    getters: {
-    }
+    getters: {}
 };
