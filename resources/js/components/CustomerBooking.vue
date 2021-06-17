@@ -132,7 +132,7 @@
           <div class="leftblock m-3 col-5 blacktitle p-0">
             <span>就診日期</span>
           </div>
-          <div class="col-12 p-0" style="margin:left:-20px;">
+          <div class="col-12 p-0" style="margin-left: -20px">
             <div class="card-body">
               <div class="card-text">
                 <div class="mb-3">
