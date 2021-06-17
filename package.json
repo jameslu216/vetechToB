@@ -9,7 +9,7 @@
     "start": "vue-cli-service serve --open",
     "watch": "mix watch",
     "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "lint": "./node_modules/.bin/eslint"
+    "format": "prettier --write 'src/**/*.{js,vue}'"
   },
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
@@ -34,6 +34,7 @@
     "node-sass": "^4.9.0",
     "popper.js": "^1.12",
     "postcss": "^8.3.4",
+    "prettier": "2.3.1",
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.32.0",
     "sass-loader": "^10.0.0",

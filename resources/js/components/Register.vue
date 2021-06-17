@@ -7,12 +7,7 @@
     <input type="email" id="email" class="form-control" v-model="email" />
     <br />
     <label for="password" class="grey-text">密碼</label>
-    <input
-      type="password"
-      id="password"
-      class="form-control"
-      v-model="password"
-    />
+    <input type="password" id="password" class="form-control" v-model="password" />
     <br />
     <label for="name" class="grey-text">姓名</label>
     <input type="text" id="name" class="form-control" v-model="name" />
@@ -25,53 +20,37 @@
     <br />
 
     <label for="pet_variety" class="grey-text">寵物種類</label>
-    <input
-      type="text"
-      id="pet_variety"
-      class="form-control"
-      v-model="pet_variety"
-    />
+    <input type="text" id="pet_variety" class="form-control" v-model="pet_variety" />
     <br />
 
     <label for="pet_gender" class="grey-text">寵物性別</label>
-    <input
-      type="text"
-      id="pet_gender"
-      class="form-control"
-      v-model="pet_gender"
-    />
+    <input type="text" id="pet_gender" class="form-control" v-model="pet_gender" />
     <br />
     <div class="text-center mt-4">
-      <button
-        class="btn btn-primary"
-        style="background-color: #25d366"
-        v-on:click="register"
-      >
-        註冊
-      </button>
+      <button class="btn btn-primary" style="background-color: #25d366" v-on:click="register">註冊</button>
     </div>
   </div>
   <!-- Default form register -->
 </template>
 <script>
-import httpAPI from "../httpAPI.js";
+import httpAPI from '../httpAPI.js';
 export default {
-  name: "Basic",
+  name: 'Basic',
   data() {
     return {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      pet_name: "",
-      pet_variety: "",
-      pet_gender: "",
+      name: '',
+      email: '',
+      password: '',
+      phone: '',
+      pet_name: '',
+      pet_variety: '',
+      pet_gender: '',
     };
   },
   methods: {
     register() {
       const vm = this;
-      let registerRequirements = {
+      const registerRequirements = {
         name: this.name,
         email: this.email,
         password: this.password,
@@ -85,12 +64,11 @@ export default {
         ],
       };
       httpAPI.userRegister(registerRequirements).then(function (response) {
-        if (response == "failed") return;
-        vm.$router.push({ path: "/login" });
+        if (response == 'failed') return;
+        vm.$router.push({ path: '/login' });
       });
     },
   },
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

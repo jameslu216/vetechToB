@@ -1,0 +1,42 @@
+{
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // js文件採用prettier進行格式化
+      },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // js文件採用prettier進行格式化
+    },
+    "vetur.format.defaultFormatter.css": "none",
+    "vetur.format.defaultFormatter.html": "none",
+    "vetur.format.defaultFormatter.js": "none",
+    "vetur.format.defaultFormatter.less": "none",
+    "vetur.format.defaultFormatter.postcss": "none",
+    "vetur.format.defaultFormatter.pug": "none",
+    "vetur.format.defaultFormatter.sass": "none",
+    "vetur.format.defaultFormatter.scss": "none",
+    "vetur.format.defaultFormatter.stylus": "none",
+    "vetur.format.defaultFormatter.ts": "none",
+    "vetur.validation.script": false,
+    "vetur.validation.template": false,
+    "vetur.validation.interpolation": false,
+    "vetur.validation.style": false,
+    "vetur.languageFeatures.updateImportOnFileMove": false,
+    "vetur.languageFeatures.semanticTokens": false,
+    "vetur.languageFeatures.codeActions": false,
+    "vetur.format.enable": false,
+    "prettier.withNodeModules": true,
+    "javascript.format.enable": false,
+    "vetur.completion.autoImport": false,
+    "prettier.eslintIntegration": true,
+    "prettier.typescriptEnable": [
+
+        "typescript",
+        "typescriptreact"
+    ],
+    "editor.defaultFormatter": "bysabi.prettier-vscode-standard",
+    "editor.formatOnSave": true
+}

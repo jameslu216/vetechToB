@@ -17,13 +17,7 @@
             <label for="customer-name">姓名</label>
           </div>
           <div class="col-7 p-0">
-            <textarea
-              v-model="patient_name"
-              class="w-100"
-              style="height: 32px"
-              placeholder="必填"
-              required
-            ></textarea>
+            <textarea v-model="patient_name" class="w-100" style="height: 32px" placeholder="必填" required></textarea>
           </div>
         </div>
         <div class="row ml-3">
@@ -50,13 +44,7 @@
             <label class="normal_text" for="pet-name">姓名</label>
           </div>
           <div class="col-7 p-0">
-            <textarea
-              v-model="pet_name"
-              class="w-100"
-              style="height: 32px"
-              placeholder="必填"
-              required
-            ></textarea>
+            <textarea v-model="pet_name" class="w-100" style="height: 32px" placeholder="必填" required></textarea>
           </div>
         </div>
         <div class="row ml-3">
@@ -64,13 +52,7 @@
             <label class="normal_text" for="pet-gender">性別</label>
           </div>
           <div class="col-7 p-0">
-            <textarea
-              v-model="pet_gender"
-              class="w-100"
-              style="height: 32px"
-              placeholder="必填"
-              required
-            ></textarea>
+            <textarea v-model="pet_gender" class="w-100" style="height: 32px" placeholder="必填" required></textarea>
           </div>
         </div>
 
@@ -79,40 +61,19 @@
             <label class="normal_text" for="pet-type">品種</label>
           </div>
           <div class="col-7 p-0">
-            <textarea
-              v-model="pet_variety"
-              class="w-100"
-              style="height: 32px"
-              placeholder="必填"
-              required
-            ></textarea>
+            <textarea v-model="pet_variety" class="w-100" style="height: 32px" placeholder="必填" required></textarea>
           </div>
         </div>
         <div class="row ml-3">
-          <div class="leftblock col-3 p-0">
-            <label class="normal_text" for="pet-age"></label>年齡
-          </div>
+          <div class="leftblock col-3 p-0"><label class="normal_text" for="pet-age"></label>年齡</div>
           <div class="col-7 p-0">
-            <textarea
-              v-model="pet_age"
-              class="w-100"
-              style="height: 32px"
-              placeholder="必填"
-              required
-            ></textarea>
+            <textarea v-model="pet_age" class="w-100" style="height: 32px" placeholder="必填" required></textarea>
           </div>
         </div>
         <div class="row ml-3">
-          <div class="leftblock col-3 p-0">
-            <label class="normal_text" for="pet-weight"></label>體重
-          </div>
+          <div class="leftblock col-3 p-0"><label class="normal_text" for="pet-weight"></label>體重</div>
           <div class="col-7 p-0">
-            <textarea
-              v-model="pet_weight"
-              class="w-100"
-              style="height: 32px"
-              placeholder="選填"
-            ></textarea>
+            <textarea v-model="pet_weight" class="w-100" style="height: 32px" placeholder="選填"></textarea>
           </div>
         </div>
         <!-- <div class="row ml-3">
@@ -161,16 +122,9 @@
         </div>
 
         <div class="row ml-3 mt-2">
-          <div class="leftblock col-2 p-0">
-            <label class="normal_text" for="pet-reminder"></label>備註
-          </div>
+          <div class="leftblock col-2 p-0"><label class="normal_text" for="pet-reminder"></label>備註</div>
           <div class="col-9 p-0">
-            <textarea
-              v-model="pet_note"
-              class="w-100"
-              style="height: 64px"
-              placeholder="選填"
-            ></textarea>
+            <textarea v-model="pet_note" class="w-100" style="height: 64px" placeholder="選填"></textarea>
           </div>
         </div>
 
@@ -199,21 +153,14 @@
                     @selected="showServableTime()"
                   ></b-calendar>
                 </div>
-                <div
-                  v-if="servable_time[0] != undefined"
-                  class="row mx-0 p-0 booking_time"
-                >
+                <div v-if="servable_time[0] != undefined" class="row mx-0 p-0 booking_time">
                   <div
                     class="col-4 p-0 my-3"
                     v-for="(time, index) in servable_time[0].times"
                     :key="index"
                     @click="selected_time = time"
                   >
-                    <span
-                      :class="selected_time == time ? 'Active' : 'notActive'"
-                      class="time_button"
-                      >{{ time }}</span
-                    >
+                    <span :class="selected_time == time ? 'Active' : 'notActive'" class="time_button">{{ time }}</span>
                   </div>
                 </div>
               </div>
@@ -242,8 +189,7 @@
         </div>
         <div v-if="selected_date && selected_time" class="row mb-3">
           <span class="text-center w-100 normal_text"
-            >您的預約日期為{{ "   " }}{{ selected_date }}{{ "   "
-            }}{{ selected_time }}</span
+            >您的預約日期為{{ '   ' }}{{ selected_date }}{{ '   ' }}{{ selected_time }}</span
           >
         </div>
       </div>
@@ -254,12 +200,7 @@
             >Simple msgBoxConfirm</b-button
           > -->
 
-          <button
-            type="button"
-            class="btn booking_button"
-            data-toggle="modal"
-            data-target="#exampleModal"
-          >
+          <button type="button" class="btn booking_button" data-toggle="modal" data-target="#exampleModal">
             確認預約
           </button>
 
@@ -276,33 +217,14 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">確認預約</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-                  您的預約日期為{{ "   " }}{{ selected_date }}{{ "   "
-                  }}{{ selected_time }}
-                </div>
+                <div class="modal-body">您的預約日期為{{ '   ' }}{{ selected_date }}{{ '   ' }}{{ selected_time }}</div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-dismiss="modal"
-                    @click="submitBooking"
-                  >
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" @click="submitBooking">
                     確認預約
                   </button>
                 </div>
@@ -320,9 +242,9 @@
 </template>
 
 <script>
-import httpAPI from "../httpAPI.js";
+import httpAPI from '../httpAPI.js';
 export default {
-  name: "CustomerBooking",
+  name: 'CustomerBooking',
   data() {
     //  下面用來處理日曆的部分
     const now = new Date();
@@ -336,37 +258,37 @@ export default {
 
     return {
       clinic: {
-        id: "1",
-        name: "",
-        address: "",
-        introduction: "",
-        service_type: "",
-        phone: "",
-        picture: "",
+        id: '1',
+        name: '',
+        address: '',
+        introduction: '',
+        service_type: '',
+        phone: '',
+        picture: '',
         serve_times: [],
       },
-      bookingStatus: "",
-      vet_name: "聯 盟 動 物 醫 院",
-      vet_branch_name: "仁武總院",
+      bookingStatus: '',
+      vet_name: '聯 盟 動 物 醫 院',
+      vet_branch_name: '仁武總院',
       vet_work_time: {},
-      vet_address: "高雄市仁武區鳳仁路231號E棟",
-      vet_phone_number: "(07)2730964 #20",
-      value: "",
-      formatted_date: "",
-      selected_date: "2021-5-22",
-      selected_day: "",
-      selected_time: "",
-      patient_name: "",
-      customer_phone_number: "",
-      customer_api_token: "",
-      pet_name: "",
-      pet_gender: "",
-      pet_variety: "",
-      pet_age: "",
-      pet_weight: "",
-      pet_feeding_habbit: "",
-      pet_chip_num: "",
-      pet_note: "",
+      vet_address: '高雄市仁武區鳳仁路231號E棟',
+      vet_phone_number: '(07)2730964 #20',
+      value: '',
+      formatted_date: '',
+      selected_date: '2021-5-22',
+      selected_day: '',
+      selected_time: '',
+      patient_name: '',
+      customer_phone_number: '',
+      customer_api_token: '',
+      pet_name: '',
+      pet_gender: '',
+      pet_variety: '',
+      pet_age: '',
+      pet_weight: '',
+      pet_feeding_habbit: '',
+      pet_chip_num: '',
+      pet_note: '',
       service_type_selected: [],
       servable_doctor: [],
       servable_time: [],
@@ -387,7 +309,7 @@ export default {
   },
   watch: {
     clinic(newVal, oldVal) {
-      this.service_type = newVal.service_type.split(",").map(function (item) {
+      this.service_type = newVal.service_type.split(',').map(function (item) {
         return { item: item }; // 比較大於五歲的
       });
     },
@@ -410,7 +332,7 @@ export default {
   mounted() {},
   methods: {
     submitBooking() {
-      let service_type = "";
+      let service_type = '';
       const vm = this;
       this.service_type_selected.forEach((element) => {
         service_type += `${element} `;
@@ -443,14 +365,12 @@ export default {
       const servable_doctor = [];
       const servable_time = [];
       //取得當日空閑時間
-      httpAPI
-        .getServableTime(this.clinic.id, this.selected_date, this.selected_day)
-        .then(function (response) {
-          for (let object in response.data) {
-            servable_doctor.push(object);
-            servable_time.push(response.data[object]);
-          }
-        });
+      httpAPI.getServableTime(this.clinic.id, this.selected_date, this.selected_day).then(function (response) {
+        for (let object in response.data) {
+          servable_doctor.push(object);
+          servable_time.push(response.data[object]);
+        }
+      });
       this.servable_doctor = servable_doctor;
       this.servable_time = servable_time;
     },
