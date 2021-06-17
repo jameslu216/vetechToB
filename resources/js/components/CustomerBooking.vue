@@ -310,7 +310,7 @@ export default {
   watch: {
     clinic(newVal, oldVal) {
       this.service_type = newVal.service_type.split(',').map(function (item) {
-        return { item: item }; // 比較大於五歲的
+        return { item: item, name: item }; // 比較大於五歲的
       });
     },
   },
