@@ -15,11 +15,11 @@ class DiagnosisRecordTable extends Migration
     {
         Schema::create('diagnosis_record', function (Blueprint $table) {
             $table->integer('id')->unsigned();
-            $table->integer('clinic_id')->unsigned();
+            $table->integer('clinic_id')->unsigned()->references('id')->on('clinic');
             $table->primary(['id', 'clinic_id']);
 
             $table->string('patient_name');
-            $table->integer('customer_id')->unsigned();
+            $table->integer('customer_id')->unsigned()->references('user_id')->on('customer');
             $table->string('phone');
             $table->string('pet_name');
             $table->string('pet_variety')->nullable();
@@ -30,7 +30,7 @@ class DiagnosisRecordTable extends Migration
             $table->string('note')->nullable();
             $table->string('diagnosis_note')->nullable();
             $table->dateTime('datetime');
-            $table->integer('doctor_id')->nullable();
+            $table->integer('doctor_id')->nullable()->references('user_id')->on('doctor');
         });
     }
 

@@ -15,7 +15,7 @@ class CreateDiagnosisTimeTable extends Migration
     {
         Schema::create('diagnosis_time', function (Blueprint $table) {
             // $table->increments('id');
-            $table->integer('doctor_id')->unsigned();
+            $table->integer('doctor_id')->unsigned()->references('user_id')->on('doctor');
             $table->tinyInteger('day')->unsigned(); //星期幾
             // $table->tinyInteger('time_zone')->unsigned(); //哪一個時段 上午 中午 下午 代表 0 1 2
             $table->time('start_at');

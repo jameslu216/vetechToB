@@ -19,7 +19,7 @@ class CreatePetTable extends Migration
             $table->string('variety'); //品種
             $table->integer('age')->unsigned();
             $table->string('gender');
-            $table->integer('customer_id')->unsigned();
+            $table->integer('customer_id')->unsigned()->references('user_id')->on('customer');
         });
     }
 
