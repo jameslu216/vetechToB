@@ -123,7 +123,7 @@
 
         <div class="row ml-3 mt-2">
           <div class="leftblock col-2 p-0"><label class="normal_text" for="pet-reminder"></label>備註</div>
-          <div class="col-9 p-0">
+          <div class="col-9 p-0 ml-1">
             <textarea v-model="pet_note" class="w-100" style="height: 64px" placeholder="選填"></textarea>
           </div>
         </div>
@@ -132,13 +132,14 @@
           <div class="leftblock m-3 col-5 blacktitle p-0">
             <span>就診日期</span>
           </div>
-          <div class="col-12 p-0" style="margin-left: -20px">
-            <div class="card-body">
+          <div class="col-12 p-0">
+            <div>
               <div class="card-text">
                 <div class="mb-3">
                   <b-calendar
                     class="d-block booking-calendar"
                     label-help=""
+                    block
                     :date-disabled-fn="dateDisabled"
                     :date-format-options="{
                       year: 'numeric',
@@ -149,8 +150,8 @@
                     :max="max_date"
                     @context="onContext"
                     locale="zh-TW"
-                    width="350px"
                     @selected="showServableTime()"
+                    style="margin: 0px 1rem"
                   ></b-calendar>
                 </div>
                 <div v-if="servable_time[0] != undefined" class="row mx-0 p-0 booking_time">
@@ -243,6 +244,8 @@
 
 <script>
 import httpAPI from '../httpAPI.js';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 export default {
   name: 'CustomerBooking',
   data() {
@@ -442,11 +445,6 @@ export default {
   }
   .time_button :hover {
     color: #575757;
-  }
-  .card-body {
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1.25rem;
   }
   .vet_name {
     font-size: 26px;
