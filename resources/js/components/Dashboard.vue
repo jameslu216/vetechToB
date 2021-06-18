@@ -5,8 +5,18 @@
       <div class="col-12 p-0">
         <div class="row m-3 p-0">
           <div class="col-12 px-0 pb-3 upcoming_page">
-            <div class="title_discription">
-              <span>Upcoming Book</span>
+            <div class="row m-0 title__main_title">
+              <div class="p-3">
+                <span>Upcoming Book</span>
+              </div>
+              <div class="p-2">
+                <b-form-datepicker
+                  id="example-datepicker"
+                  v-model="selected_date"
+                  class="mb-2"
+                  width="350px"
+                ></b-form-datepicker>
+              </div>
             </div>
             <div class="row item_title">
               <div class="title_colname_xs title_text">日期</div>
@@ -104,8 +114,8 @@
                 <div class="row">
                   <div class="col-4 p-0" v-for="(doctor, index) in doctor_diagnosis_list" :key="doctor.doctor_id">
                     <div class="m-3 doctor_table">
-                      <div class="title_discription">
-                        <span>{{ doctor.doctor_name }}</span>
+                      <div class="title__sub_title">
+                        <span>Dr.{{ doctor.doctor_name }}</span>
                       </div>
                       <div
                         class="row reservation_col text-center"
@@ -125,7 +135,7 @@
               </div>
               <div class="p-0 col-4">
                 <div class="ml-3 my-3 onlooking_list">
-                  <div class="title_discription">
+                  <div class="title__sub_title">
                     <span>正在看診</span>
                   </div>
                   <div class="row item_title text-center">
@@ -182,7 +192,7 @@
 
       <!-- <div class="waiting_page"></div>
                 <div class="text-left gray-title">
-                    <span class="title_discription">已到診等候</span>
+                    <span class="title__sub_title">已到診等候</span>
                 </div>
                 <div class="waiting_page lower_radius"></div> -->
     </div>
@@ -191,6 +201,8 @@
 </template>
 <script>
 import httpAPI from '../httpAPI.js';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 export default {
   name: 'Dashboard',
   data() {
@@ -241,12 +253,19 @@ export default {
           phone: '0912345678',
         },
       ],
+      selected_date: '',
       modalShow: false,
       looking_list: [],
       cost: '',
       exit_note: '',
       exit_id: '',
     };
+  },
+  watch: {
+    selected_date: function () {
+      this.getReservation(this.selected_date);
+      this.getDiagnosisInfo(this.selected_date);
+    },
   },
   mounted() {
     const now = new Date();
@@ -259,8 +278,7 @@ export default {
       date = `0${date}`;
     }
     const today = `${now.getFullYear()}-${month}-${date}`;
-    this.getReservation(today);
-    this.getDiagnosisInfo(today);
+    this.selected_date = today;
   },
   methods: {
     getRecord(customer_id, index) {
@@ -312,30 +330,33 @@ export default {
 };
 </script>
 <style lang="scss">
-.col-0-5 {
-  width: 5%;
-}
-.col-11-5 {
-  width: 95%;
-}
 .title_text {
   font-size: 16px;
   font-weight: bold;
 }
-.title_discription {
-  border-radius: 10px 10px 0px 0px;
-  background-color: #c4c4c4;
-  height: 50px;
-  text-align: left;
-  font-weight: bold;
-  padding: 15px 0px 15px 30px;
+.title {
+  &__main_title {
+    height: 80px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #c4c4c4;
+    text-align: left;
+    font-weight: bold;
+    padding: 15px 0px 15px 30px;
+  }
+  &__sub_title {
+    height: 50px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #c4c4c4;
+    text-align: left;
+    font-weight: bold;
+    padding: 15px 0px 15px 30px;
+  }
 }
 .upcoming_page {
   background-color: white;
   border-radius: 10px;
   min-height: 500px;
 }
-
 .reservation_col {
   background-color: #c4e1e1;
   border-radius: 10px;
