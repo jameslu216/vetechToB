@@ -36,7 +36,9 @@ export default {
   mounted() {
     if (this.hasLogin) {
       alert('您已登入，可切往預約');
-      this.$router.push({ path: '/booking' });
+      this.$router.push({ path: '/booking' }).catch((err) => {
+        err;
+      });
     }
   },
   methods: {
