@@ -41,9 +41,13 @@ export default {
   },
   mounted() {
     if (this.hasLogin) {
-      this.$router.push({ path: '/booking' });
+      this.$router.push({ path: '/booking' }).catch((err) => {
+        err;
+      });
     } else if (!this.hasLogin) {
-      this.$router.push({ path: '/login' });
+      this.$router.push({ path: '/login' }).catch((err) => {
+        err;
+      });
     }
   },
   methods: {},
