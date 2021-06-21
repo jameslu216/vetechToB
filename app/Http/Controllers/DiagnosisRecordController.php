@@ -32,8 +32,7 @@ class DiagnosisRecordController extends BaseController
         $move_diagnosis_record_data = $request->all();
         if (
             empty($move_diagnosis_record_data['clinic_id']) ||
-            empty($move_diagnosis_record_data['reservation_id']) ||
-            empty($move_diagnosis_record_data['diagnosis_note'])
+            empty($move_diagnosis_record_data['reservation_id'])
         ) {
             return response('error', 400);
         }
