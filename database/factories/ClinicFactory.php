@@ -22,8 +22,8 @@ class ClinicFactory extends Factory
     public function definition()
     {
         $service_type = [
+            '新客戶',
             '年度體檢',
-            '新客戶(請於10分鐘前抵達)',
             '疫苗接種',
             '藥物Refill',
             '手術',
@@ -37,7 +37,7 @@ class ClinicFactory extends Factory
             unset($service_type[$rand_service_type]);
         }
         return [
-            'name' => $this->faker->name,
+            'name' =>"林院長",
             'address' => $this->faker->address,
             'introduction' => $this->faker->text,
             'service_type' => implode(',', $service_type),

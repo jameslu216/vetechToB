@@ -1,6 +1,6 @@
 <template>
   <!-- Default form login -->
-  <div v-if="!hasLogin" class="display_mid">
+  <div v-if="!hasLogin" class="display_mid mt-2">
     <p class="h4 text-center mb-4">登入</p>
     <label for="defaultFormLoginEmailEx" class="grey-text">帳號信箱</label>
     <input type="email" id="defaultFormLoginEmailEx" class="form-control" v-model="email" />

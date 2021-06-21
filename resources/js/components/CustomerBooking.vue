@@ -278,7 +278,7 @@ export default {
       vet_phone_number: '(07)2730964 #20',
       value: '',
       formatted_date: '',
-      selected_date: '2021-5-22',
+      selected_date: '',
       selected_day: '',
       selected_time: '',
       patient_name: '',
@@ -356,7 +356,12 @@ export default {
         doctor_id: this.servable_time[0].doctor_id,
       };
       //預約
-      httpAPI.addReservation(data, this.customer_api_token);
+      httpAPI.addReservation(data, this.customer_api_token).then(function (response) {
+        if (response == 'success') alert('預約成功');
+        else alert('預約未完成，該時段已額滿，請重新預約');
+      });
+      this.selected_time = '';
+      this.showServableTime();
     },
     showServableTime() {
       // selected_date:"2021-05-15"

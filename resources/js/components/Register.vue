@@ -1,6 +1,6 @@
 <template>
   <!-- Default form register -->
-  <div class="display_mid">
+  <div class="display_mid mt-2">
     <p class="h4 text-center mb-4">註冊會員</p>
 
     <label for="email" class="grey-text">信箱</label>
