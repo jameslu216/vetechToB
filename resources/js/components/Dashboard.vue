@@ -28,8 +28,9 @@
               <div class="title_colname_s title_text">治療項目</div>
               <div class="title_colname_m title_text">診前備註</div>
               <div class="title_colname_m title_text">電話號碼</div>
-              <div class="title_colname_m title_text">過往紀錄</div>
-              <div class="title_colname_m title_text">進入診間</div>
+              <div class="reservation_content_button title_text">過往紀錄</div>
+              <div class="reservation_content_button title_text">進入診間</div>
+              <div class="reservation_content_button title_text">編輯/取消</div>
             </div>
             <div v-for="(item, index) in reservation" :key="index">
               <div class="row py-3 mt-2 mb-2 reservation_col">
@@ -60,17 +61,39 @@
                 <div class="reservation_content_m">
                   {{ item.phone }}
                 </div>
-                <div class="reservation_content_m">
-                  <button class="btn btn-info" style="font-size: 12px" v-on:click="getRecord(item.customer_id, index)">
+                <div class="reservation_content_button">
+                  <button
+                    class="btn btn-info"
+                    style="width: 60px; font-size: 12px; padding: 4px"
+                    v-on:click="getRecord(item.customer_id, index)"
+                  >
                     紀錄
                   </button>
                 </div>
-                <div class="reservation_content_m">
-                  <button class="btn btn-success" style="font-size: 12px" v-on:click="startDiagnosis(index)">
+                <div class="reservation_content_button">
+                  <button
+                    class="btn btn-success"
+                    style="width: 60px; font-size: 12px; padding: 4px"
+                    v-on:click="startDiagnosis(index)"
+                  >
                     開始看診
                   </button>
                 </div>
+                <div class="reservation_content_button" style="width: 10% !important">
+                  <b-button
+                    style="width: 40px; font-size: 12px; padding: 4px"
+                    @click="
+                      editReservation = !editReservation;
+                      onclickReservation = index;
+                    "
+                    >編輯</b-button
+                  >
+                  <b-button style="width: 40px; font-size: 12px; padding: 4px" @click="deleteReservation(index)"
+                    >刪除</b-button
+                  >
+                </div>
               </div>
+
               <div class="w-100">
                 <div class="row record_col" v-if="item.isOpenRecord != undefined && item.isOpenRecord == true">
                   <div class="reservation_content_s">日期</div>
@@ -106,7 +129,30 @@
             </div>
           </div>
         </div>
-
+        <b-modal title="修改預約" v-model="editReservation">
+          <span>因應老師要求補上，短時間沒辦法設計，故請照 placeholder 內填寫資訊</span>
+          <div class="row">
+            <span class="col-3">日期</span>
+            <input class="col-8" type="text" v-model="modifyDate" placeholder="ex: 2021-01-01" />
+          </div>
+          <div class="row">
+            <span class="col-3">時間</span>
+            <input class="col-8" type="text" v-model="modifyTime" placeholder="ex: 21:00" />
+          </div>
+          <template #modal-footer="{ cancel }">
+            <b-button size="sm" variant="danger" @click="cancel()"> 取消 </b-button>
+            <b-button
+              size="sm"
+              variant="success"
+              v-on:click="
+                modifyReservation();
+                editReservation = !editReservation;
+              "
+            >
+              修改預約
+            </b-button>
+          </template>
+        </b-modal>
         <div class="row m-3 p-0">
           <div class="col-12 px-0 pb-3">
             <div class="row m-0 p-0">
@@ -241,7 +287,7 @@ export default {
       ],
       reservation: [
         {
-          id: '023',
+          reservation_id: '023',
           date: '03/16',
           time: '15:00',
           pet_name: 'BoBo',
@@ -255,10 +301,14 @@ export default {
       ],
       selected_date: '',
       modalShow: false,
+      editReservation: false,
       looking_list: [],
       cost: '',
       exit_note: '',
       exit_id: '',
+      onclickReservation: '',
+      modifyDate: '',
+      modifyTime: '',
     };
   },
   watch: {
@@ -281,11 +331,30 @@ export default {
     this.selected_date = today;
   },
   methods: {
+    deleteReservation(index) {
+      let data = {
+        clinic_id: this.clinic_id,
+        reservation_id: this.reservation[index].reservation_id,
+      };
+      console.log(this.reservation[index], data);
+      httpAPI.deleteReservation(data);
+      this.getReservation(this.selected_date);
+    },
+    modifyReservation() {
+      let data = {
+        clinic_id: this.clinic_id,
+        reservation_id: this.reservation[this.onclickReservation].reservation_id,
+        date: this.modifyDate,
+        time: this.modifyTime,
+      };
+      httpAPI.modifyReservation(data);
+      this.getReservation(this.selected_date);
+    },
+
     getRecord(customer_id, index) {
-      let clinic_id = '1';
       this.reservation[index].isOpenRecord = !this.reservation[index].isOpenRecord;
       const vm = this;
-      httpAPI.getDiagnosisRecord(clinic_id, customer_id).then(function (response) {
+      httpAPI.getDiagnosisRecord(this.clinic_id, customer_id).then(function (response) {
         console.log(response.data);
         vm.diagnosis_record = response.data;
       });
@@ -316,7 +385,7 @@ export default {
     saveDiagnosisRecord(object) {
       const vm = this;
       let data = {
-        clinic_id: '1',
+        clinic_id: this.clinic_id,
         reservation_id: object.reservation_id,
         cost: this.cost,
         diagnosis_note: this.exit_note,
@@ -405,6 +474,10 @@ export default {
 }
 .reservation_content_m {
   width: 11%;
+  text-align: center;
+}
+.reservation_content_button {
+  width: 8%;
   text-align: center;
 }
 .reservation_content_l {

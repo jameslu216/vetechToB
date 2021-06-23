@@ -29,6 +29,20 @@ export default {
         return 'failed';
       });
   },
+  deleteReservation: function (data) {
+    return axios({
+      method: 'post',
+      url: this.BASE_API_URL + '/reservation/remove',
+      data: data,
+    });
+  },
+  modifyReservation: function (data) {
+    return axios({
+      method: 'post',
+      url: this.BASE_API_URL + '/reservation/modify',
+      data: data,
+    });
+  },
   getReservation: function (clinic_id, date) {
     let url = `${this.BASE_API_URL}/reservation?clinic_id=${clinic_id}&date=${date}`;
     return axios.get(url);
