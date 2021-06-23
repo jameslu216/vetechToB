@@ -331,6 +331,9 @@ export default {
     this.patient_name = this.userInfo.name;
     this.customer_phone_number = this.userInfo.phone;
     this.customer_api_token = this.userInfo.api_token;
+    this.pet_name = this.userInfo.pet[0].name;
+    this.pet_gender = this.userInfo.pet[0].gender;
+    this.pet_variety = this.userInfo.pet[0].variety;
   },
   mounted() {},
   methods: {
