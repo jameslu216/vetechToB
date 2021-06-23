@@ -85,7 +85,6 @@ export default {
       });
   },
   saveDiagnosisRecord: function (data) {
-    console.log(data);
     return axios({
       method: 'post',
       url: this.BASE_API_URL + '/diagnosis/record/move_and_create',

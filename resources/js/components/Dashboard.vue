@@ -336,7 +336,6 @@ export default {
         clinic_id: this.clinic_id,
         reservation_id: this.reservation[index].reservation_id,
       };
-      console.log(this.reservation[index], data);
       httpAPI.deleteReservation(data);
       this.getReservation(this.selected_date);
     },
@@ -355,7 +354,6 @@ export default {
       this.reservation[index].isOpenRecord = !this.reservation[index].isOpenRecord;
       const vm = this;
       httpAPI.getDiagnosisRecord(this.clinic_id, customer_id).then(function (response) {
-        console.log(response.data);
         vm.diagnosis_record = response.data;
       });
     },
